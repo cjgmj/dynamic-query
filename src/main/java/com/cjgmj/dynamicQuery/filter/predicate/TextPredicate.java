@@ -1,6 +1,8 @@
 package com.cjgmj.dynamicQuery.filter.predicate;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
@@ -14,22 +16,10 @@ public class TextPredicate extends QueryPredicate {
 
 	private static final String REPLACE = "replace";
 
-	public static Expression<String> nonSensitiveText(Expression<String> expression, CriteriaBuilder cb) {
-		return TextPredicate.nonSensitiveText(expression, cb, CharacterReplacementHelper.basicReplacements());
-	}
+	private List<CharacterReplacement> charactersReplacement;
 
-	public static Expression<String> nonSensitiveText(Expression<String> expression, CriteriaBuilder cb,
-			List<CharacterReplacement> replaces) {
-		Expression<String> result = expression;
-
-		result = cb.lower(result);
-
-		for (final CharacterReplacement rc : replaces) {
-			result = cb.function(REPLACE, String.class, result, cb.literal(rc.getOldCharacter()),
-					cb.literal(rc.getNewCharacter()));
-		}
-
-		return result;
+	public TextPredicate() {
+		this.charactersReplacement = CharacterReplacementHelper.basicReplacements();
 	}
 
 	@Override
@@ -48,6 +38,36 @@ public class TextPredicate extends QueryPredicate {
 			expression = join.get(arr[arr.length - 1]);
 		}
 
-		return nonSensitiveText(expression, cb);
+		return this.nonSensitiveText(expression, cb);
+	}
+
+	private Expression<String> nonSensitiveText(Expression<String> expression, CriteriaBuilder cb) {
+		Expression<String> result = expression;
+
+		result = cb.lower(result);
+
+		for (final CharacterReplacement rc : this.charactersReplacement) {
+			result = cb.function(REPLACE, String.class, result, cb.literal(rc.getOldCharacter()),
+					cb.literal(rc.getNewCharacter()));
+		}
+
+		return result;
+	}
+
+	public TextPredicate defineCharactersReplacement(List<CharacterReplacement> charactersReplacement) {
+		this.charactersReplacement = Optional.ofNullable(charactersReplacement)
+				.orElse(CharacterReplacementHelper.emptyReplacements());
+		
+		return this;
+	}
+
+	public TextPredicate defineCharacterReplacement(CharacterReplacement characterReplacement) {
+		if (characterReplacement == null) {
+			this.charactersReplacement = CharacterReplacementHelper.emptyReplacements();
+		} else {
+			this.charactersReplacement = Arrays.asList(characterReplacement);
+		}
+		
+		return this;
 	}
 }
