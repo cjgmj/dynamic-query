@@ -13,4 +13,5 @@ public abstract class FieldFilter {
 	private String value;
 
 	public abstract QueryPredicate getQueryPredicate();
+
 }

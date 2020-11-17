@@ -1,5 +1,6 @@
 package com.cjgmj.dynamicQuery.filter.predicate;
 
+import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -7,29 +8,35 @@ import java.util.Optional;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.cjgmj.dynamicQuery.filter.FieldFilter;
 import com.cjgmj.dynamicQuery.filter.replace.CharacterReplacement;
 import com.cjgmj.dynamicQuery.filter.replace.CharacterReplacementHelper;
 
-public class TextPredicate extends QueryPredicate {
+public class TextPredicate implements QueryPredicate {
+
+	private static final String LIKE = "%";
 
 	private static final String REPLACE = "replace";
 
 	private List<CharacterReplacement> charactersReplacement;
+
+	private Boolean normalizeText = Boolean.TRUE;
 
 	public TextPredicate() {
 		this.charactersReplacement = CharacterReplacementHelper.basicReplacements();
 	}
 
 	@Override
-	protected Expression<?> getExpression(String pattern, CriteriaBuilder cb, Root<?> root) {
+	public Predicate getPredicate(CriteriaBuilder cb, Root<?> root, FieldFilter filter) {
 		Expression<String> expression = null;
 
-		final String[] arr = pattern.split("[.]");
+		final String[] arr = filter.getField().split("[.]");
 
 		if (arr.length == 1) {
-			expression = root.get(pattern);
+			expression = root.get(filter.getField());
 		} else {
 			Join<Object, Object> join = root.join(arr[0]);
 			for (int i = 1; i < arr.length - 1; i++) {
@@ -38,7 +45,7 @@ public class TextPredicate extends QueryPredicate {
 			expression = join.get(arr[arr.length - 1]);
 		}
 
-		return this.nonSensitiveText(expression, cb);
+		return cb.like(this.nonSensitiveText(expression, cb), this.transformTextToQuery(filter.getValue()));
 	}
 
 	private Expression<String> nonSensitiveText(Expression<String> expression, CriteriaBuilder cb) {
@@ -54,10 +61,18 @@ public class TextPredicate extends QueryPredicate {
 		return result;
 	}
 
+	private String transformTextToQuery(String text) {
+		if (this.normalizeText) {
+			text = Normalizer.normalize(text, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+		}
+
+		return LIKE.concat(text).concat(LIKE);
+	}
+
 	public TextPredicate defineCharactersReplacement(List<CharacterReplacement> charactersReplacement) {
 		this.charactersReplacement = Optional.ofNullable(charactersReplacement)
 				.orElse(CharacterReplacementHelper.emptyReplacements());
-		
+
 		return this;
 	}
 
@@ -67,7 +82,13 @@ public class TextPredicate extends QueryPredicate {
 		} else {
 			this.charactersReplacement = Arrays.asList(characterReplacement);
 		}
-		
+
+		return this;
+	}
+
+	public QueryPredicate noNormalizeText() {
+		this.normalizeText = Boolean.FALSE;
+
 		return this;
 	}
 }

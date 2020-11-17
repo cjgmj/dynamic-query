@@ -18,7 +18,7 @@ public class DynamicQuery<T> {
 			final List<Predicate> predicates = Collections.emptyList();
 
 			filters.forEach(filter -> {
-				predicates.add(filter.getQueryPredicate().getPredicateLike(cb, obj, filter));
+				predicates.add(filter.getQueryPredicate().getPredicate(cb, obj, filter));
 			});
 
 			return predicates.isEmpty() ? null : cb.and(predicates.toArray(new Predicate[predicates.size()]));

@@ -56,7 +56,7 @@ class DynamicQueryApplicationTests {
 						DummyEntity.class)
 				.getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicateLike(builder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(builder, root, fieldFilter);
 		final List<DummyEntity> queryResult = this.em.createQuery(query.select(root).where(predicate)).getResultList();
 
 		assertEquals(queryExpect.size(), queryResult.size());
@@ -79,7 +79,7 @@ class DynamicQueryApplicationTests {
 						DummyEntity.class)
 				.getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicateLike(builder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(builder, root, fieldFilter);
 		final List<DummyEntity> queryResult = this.em.createQuery(query.select(root).where(predicate)).getResultList();
 
 		assertEquals(queryExpect.size(), queryResult.size());
@@ -102,7 +102,7 @@ class DynamicQueryApplicationTests {
 						DummyEntity.class)
 				.getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicateLike(builder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(builder, root, fieldFilter);
 		final List<DummyEntity> queryResult = this.em.createQuery(query.select(root).where(predicate)).getResultList();
 
 		assertEquals(queryExpect.size(), queryResult.size());
@@ -125,7 +125,7 @@ class DynamicQueryApplicationTests {
 						DummyEntity.class)
 				.getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicateLike(builder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(builder, root, fieldFilter);
 		final List<DummyEntity> queryResult = this.em.createQuery(query.select(root).where(predicate)).getResultList();
 
 		assertEquals(queryExpect.size(), queryResult.size());
@@ -133,7 +133,7 @@ class DynamicQueryApplicationTests {
 	}
 
 	@Test
-	void shouldGetResultWithAccentMarkWithoutCharacterReplacementNorNormalizeText() {
+	void shouldNotGetResultWithAccentMarkWithoutCharacterReplacementNorNormalizeText() {
 		final FieldFilter fieldFilter = new TextFieldFilter("name", "óh");
 		final QueryPredicate queryPredicate = new TextPredicate().defineCharactersReplacement(null).noNormalizeText();
 
@@ -146,7 +146,7 @@ class DynamicQueryApplicationTests {
 						.concat(this.transformTextToQuery(fieldFilter.getValue(), Boolean.FALSE).concat("'")),
 				DummyEntity.class).getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicateLike(builder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(builder, root, fieldFilter);
 		final List<DummyEntity> queryResult = this.em.createQuery(query.select(root).where(predicate)).getResultList();
 
 		assertEquals(0, queryExpect.size());
@@ -167,7 +167,7 @@ class DynamicQueryApplicationTests {
 						.concat(this.transformTextToQuery(fieldFilter.getValue(), Boolean.FALSE).concat("'")),
 				DummyEntity.class).getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicateLike(builder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(builder, root, fieldFilter);
 		final List<DummyEntity> queryResult = this.em.createQuery(query.select(root).where(predicate)).getResultList();
 
 		assertEquals(queryExpect.size(), queryResult.size());
