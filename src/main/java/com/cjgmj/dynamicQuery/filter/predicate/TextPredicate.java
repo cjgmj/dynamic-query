@@ -15,7 +15,7 @@ import com.cjgmj.dynamicQuery.filter.FieldFilter;
 import com.cjgmj.dynamicQuery.filter.replace.CharacterReplacement;
 import com.cjgmj.dynamicQuery.filter.replace.CharacterReplacementHelper;
 
-public class TextPredicate implements QueryPredicate {
+public abstract class TextPredicate implements QueryPredicate {
 
 	private static final String LIKE = "%";
 
@@ -30,43 +30,47 @@ public class TextPredicate implements QueryPredicate {
 	}
 
 	@Override
-	public Predicate getPredicate(CriteriaBuilder cb, Root<?> root, FieldFilter filter) {
+	public Predicate getPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, FieldFilter fieldFilter) {
 		Expression<String> expression = null;
 
-		final String[] arr = filter.getField().split("[.]");
+		final String[] sonsField = fieldFilter.getField().split("[.]");
 
-		if (arr.length == 1) {
-			expression = root.get(filter.getField());
+		if (sonsField.length == 1) {
+			expression = root.get(fieldFilter.getField());
 		} else {
-			Join<Object, Object> join = root.join(arr[0]);
-			for (int i = 1; i < arr.length - 1; i++) {
-				join = join.join(arr[i]);
+			Join<Object, Object> join = root.join(sonsField[0]);
+			for (int i = 1; i < sonsField.length - 1; i++) {
+				join = join.join(sonsField[i]);
 			}
-			expression = join.get(arr[arr.length - 1]);
+			expression = join.get(sonsField[sonsField.length - 1]);
 		}
 
-		return cb.like(this.nonSensitiveText(expression, cb), this.transformTextToQuery(filter.getValue()));
+		return this.buildPredicate(criteriaBuilder, this.nonSensitiveText(expression, criteriaBuilder),
+				this.transformTextToQuery(fieldFilter.getValue()));
 	}
 
-	private Expression<String> nonSensitiveText(Expression<String> expression, CriteriaBuilder cb) {
-		Expression<String> result = expression;
+	protected abstract Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Expression<String> expression,
+			String value);
 
-		result = cb.lower(result);
+	private Expression<String> nonSensitiveText(Expression<String> expression, CriteriaBuilder criteriaBuilder) {
+		Expression<String> finalExpression = expression;
+
+		finalExpression = criteriaBuilder.lower(finalExpression);
 
 		for (final CharacterReplacement rc : this.charactersReplacement) {
-			result = cb.function(REPLACE, String.class, result, cb.literal(rc.getOldCharacter()),
-					cb.literal(rc.getNewCharacter()));
+			finalExpression = criteriaBuilder.function(REPLACE, String.class, finalExpression,
+					criteriaBuilder.literal(rc.getOldCharacter()), criteriaBuilder.literal(rc.getNewCharacter()));
 		}
 
-		return result;
+		return finalExpression;
 	}
 
-	private String transformTextToQuery(String text) {
+	private String transformTextToQuery(String value) {
 		if (this.normalizeText) {
-			text = Normalizer.normalize(text, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+			value = Normalizer.normalize(value, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 		}
 
-		return LIKE.concat(text).concat(LIKE);
+		return LIKE.concat(value).concat(LIKE);
 	}
 
 	public TextPredicate defineCharactersReplacement(List<CharacterReplacement> charactersReplacement) {
@@ -86,7 +90,7 @@ public class TextPredicate implements QueryPredicate {
 		return this;
 	}
 
-	public QueryPredicate noNormalizeText() {
+	public TextPredicate noNormalizeText() {
 		this.normalizeText = Boolean.FALSE;
 
 		return this;

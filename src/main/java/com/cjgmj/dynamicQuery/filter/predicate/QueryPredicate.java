@@ -9,6 +9,6 @@ import com.cjgmj.dynamicQuery.filter.FieldFilter;
 @FunctionalInterface
 public interface QueryPredicate {
 
-	Predicate getPredicate(CriteriaBuilder cb, Root<?> root, FieldFilter filter);
+	Predicate getPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, FieldFilter fieldFilter);
 
 }

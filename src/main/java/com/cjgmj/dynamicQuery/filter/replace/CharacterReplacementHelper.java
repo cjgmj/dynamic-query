@@ -1,8 +1,9 @@
 package com.cjgmj.dynamicQuery.filter.replace;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,39 +13,33 @@ import lombok.Getter;
 public class CharacterReplacementHelper {
 
 	@Getter
-	private final List<CharacterReplacement> replaces;
+	private final List<CharacterReplacement> charactersReplacement;
 
 	public static List<CharacterReplacement> emptyReplacements() {
-		return new CharacterReplacementHelper(Collections.emptyList()).getReplaces();
+		return new CharacterReplacementHelper(Collections.emptyList()).getCharactersReplacement();
 	}
 
 	public static List<CharacterReplacement> basicReplacements() {
-		return new CharacterReplacementHelper(Arrays.asList(CharacterReplacement.A_ACUTE, CharacterReplacement.A_GRAVE,
-				CharacterReplacement.A_UML, CharacterReplacement.A_CIRC, CharacterReplacement.E_ACUTE,
-				CharacterReplacement.E_GRAVE, CharacterReplacement.E_UML, CharacterReplacement.E_CIRC,
-				CharacterReplacement.I_ACUTE, CharacterReplacement.I_GRAVE, CharacterReplacement.I_UML,
-				CharacterReplacement.I_CIRC, CharacterReplacement.O_ACUTE, CharacterReplacement.O_GRAVE,
-				CharacterReplacement.O_UML, CharacterReplacement.O_CIRC, CharacterReplacement.U_ACUTE,
-				CharacterReplacement.U_GRAVE, CharacterReplacement.U_UML, CharacterReplacement.U_CIRC,
-				CharacterReplacement.N_TILDE, CharacterReplacement.HYPHEN)).getReplaces();
+		return new CharacterReplacementHelper(Stream.of(CharacterReplacement.values()).collect(Collectors.toList()))
+				.getCharactersReplacement();
 	}
 
 	public List<CharacterReplacement> addListReplacement(List<CharacterReplacement> replacesCharacters) {
-		this.replaces.addAll(replacesCharacters);
+		this.getCharactersReplacement().addAll(replacesCharacters);
 
-		return this.replaces;
+		return this.getCharactersReplacement();
 	}
 
 	public List<CharacterReplacement> addReplacement(CharacterReplacement replaceCharacter) {
-		this.replaces.add(replaceCharacter);
+		this.getCharactersReplacement().add(replaceCharacter);
 
-		return this.replaces;
+		return this.getCharactersReplacement();
 	}
 
 	public List<CharacterReplacement> deleteReplacement(CharacterReplacement replaceCharacter) {
-		this.replaces.remove(replaceCharacter);
+		this.getCharactersReplacement().remove(replaceCharacter);
 
-		return this.replaces;
+		return this.getCharactersReplacement();
 	}
 
 }
