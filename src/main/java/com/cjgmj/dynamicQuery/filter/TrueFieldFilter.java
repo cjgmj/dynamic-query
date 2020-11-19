@@ -1,17 +1,17 @@
 package com.cjgmj.dynamicQuery.filter;
 
-import com.cjgmj.dynamicQuery.filter.predicate.FalsePredicate;
 import com.cjgmj.dynamicQuery.filter.predicate.QueryPredicate;
+import com.cjgmj.dynamicQuery.filter.predicate.TruePredicate;
 
-public class FalseFilter extends FieldFilter {
+public class TrueFieldFilter extends FieldFilter {
 
-	public FalseFilter(String field) {
+	public TrueFieldFilter(String field) {
 		super(field, null);
 	}
 
 	@Override
 	public QueryPredicate getQueryPredicate() {
-		return new FalsePredicate();
+		return new TruePredicate();
 	}
 
 }
