@@ -7,7 +7,8 @@ import javax.persistence.criteria.Predicate;
 public class TextEqualPredicate extends TextPredicate {
 
 	@Override
-	protected Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Expression<String> expression, String value) {
+	protected Predicate buildTextPredicate(CriteriaBuilder criteriaBuilder, Expression<String> expression,
+			String value) {
 		return criteriaBuilder.equal(expression, value);
 	}
 

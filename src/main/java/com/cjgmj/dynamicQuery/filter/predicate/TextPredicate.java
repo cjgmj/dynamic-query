@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -30,39 +29,34 @@ public abstract class TextPredicate implements QueryPredicate {
 	}
 
 	@Override
-	public Predicate getPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, FieldFilter fieldFilter) {
-		Expression<String> expression = null;
-
-		final String[] sonsField = fieldFilter.getField().split("[.]");
-
-		if (sonsField.length == 1) {
-			expression = root.get(fieldFilter.getField());
-		} else {
-			Join<Object, Object> join = root.join(sonsField[0]);
-			for (int i = 1; i < sonsField.length - 1; i++) {
-				join = join.join(sonsField[i]);
-			}
-			expression = join.get(sonsField[sonsField.length - 1]);
-		}
-
-		return this.buildPredicate(criteriaBuilder, this.nonSensitiveText(expression, criteriaBuilder),
+	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
+			FieldFilter fieldFilter) {
+		return this.buildTextPredicate(criteriaBuilder, this.expressionNonSensitiveText(expression, criteriaBuilder),
 				this.transformTextToQuery(fieldFilter.getValue()));
 	}
 
-	protected abstract Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Expression<String> expression,
+	protected abstract Predicate buildTextPredicate(CriteriaBuilder criteriaBuilder, Expression<String> expression,
 			String value);
 
-	private Expression<String> nonSensitiveText(Expression<String> expression, CriteriaBuilder criteriaBuilder) {
-		Expression<String> finalExpression = expression;
+	private Expression<String> expressionNonSensitiveText(Expression<String> expression,
+			CriteriaBuilder criteriaBuilder) {
+		expression = this.toLowerCase(expression, criteriaBuilder);
+		expression = this.replaceCharacters(expression, criteriaBuilder);
 
-		finalExpression = criteriaBuilder.lower(finalExpression);
+		return expression;
+	}
 
+	private Expression<String> toLowerCase(Expression<String> expression, CriteriaBuilder criteriaBuilder) {
+		return criteriaBuilder.lower(expression);
+	}
+
+	private Expression<String> replaceCharacters(Expression<String> expression, CriteriaBuilder criteriaBuilder) {
 		for (final CharacterReplacement rc : this.charactersReplacement) {
-			finalExpression = criteriaBuilder.function(REPLACE, String.class, finalExpression,
+			expression = criteriaBuilder.function(REPLACE, String.class, expression,
 					criteriaBuilder.literal(rc.getOldCharacter()), criteriaBuilder.literal(rc.getNewCharacter()));
 		}
 
-		return finalExpression;
+		return expression;
 	}
 
 	private String transformTextToQuery(String value) {
