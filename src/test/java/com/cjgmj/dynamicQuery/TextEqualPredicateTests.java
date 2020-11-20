@@ -85,8 +85,9 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkWithoutCharacterReplacement() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn");
-		final QueryPredicate queryPredicate = new TextLikePredicate().defineCharactersReplacement(null);
+		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn")
+				.defineCharactersReplacement(null);
+		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
 		final CriteriaQuery<DummyEntity> criteriaQuery = criteriaBuilder.createQuery(DummyEntity.class);
@@ -109,8 +110,9 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacement() {
-		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "john");
-		final QueryPredicate queryPredicate = new TextLikePredicate().defineCharactersReplacement(null);
+		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "john")
+				.defineCharactersReplacement(null);
+		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
 		final CriteriaQuery<DummyEntity> criteriaQuery = criteriaBuilder.createQuery(DummyEntity.class);
@@ -133,9 +135,9 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldNotGetResultWithAccentMarkWithoutCharacterReplacementNorNormalizeText() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn");
-		final QueryPredicate queryPredicate = new TextLikePredicate().defineCharactersReplacement(null)
-				.noNormalizeText();
+		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn")
+				.defineCharactersReplacement(null).noNormalizeText();
+		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
 		final CriteriaQuery<DummyEntity> criteriaQuery = criteriaBuilder.createQuery(DummyEntity.class);
@@ -156,9 +158,9 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacementNorNormalizeText() {
-		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "john");
-		final QueryPredicate queryPredicate = new TextLikePredicate().defineCharactersReplacement(null)
-				.noNormalizeText();
+		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "john")
+				.defineCharactersReplacement(null).noNormalizeText();
+		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
 		final CriteriaQuery<DummyEntity> criteriaQuery = criteriaBuilder.createQuery(DummyEntity.class);

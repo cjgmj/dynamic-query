@@ -1,6 +1,6 @@
 package com.cjgmj.dynamicQuery.filter.replace;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,7 +16,7 @@ public class CharacterReplacementHelper {
 	private final List<CharacterReplacement> charactersReplacement;
 
 	public static List<CharacterReplacement> emptyReplacements() {
-		return new CharacterReplacementHelper(Collections.emptyList()).getCharactersReplacement();
+		return new CharacterReplacementHelper(new ArrayList<CharacterReplacement>()).getCharactersReplacement();
 	}
 
 	public static List<CharacterReplacement> basicReplacements() {

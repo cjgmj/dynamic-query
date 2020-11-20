@@ -1,6 +1,6 @@
 package com.cjgmj.dynamicQuery.query;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.Predicate;
@@ -15,7 +15,7 @@ public class QuerySpecification<T> {
 
 	public Specification<T> specificSearchs(List<FieldFilter<?>> fieldFilters) {
 		return (root, criteriaQuery, criteriaBuilder) -> {
-			final List<Predicate> predicatesList = Collections.emptyList();
+			final List<Predicate> predicatesList = new ArrayList<>();
 
 			fieldFilters.forEach(filter -> {
 				predicatesList.add(filter.getQueryPredicate().getPredicate(criteriaBuilder, root, filter));
@@ -28,7 +28,7 @@ public class QuerySpecification<T> {
 
 	public Specification<T> globalSearchs(List<FieldFilter<?>> fieldFilters) {
 		return (root, criteriaQuery, criteriaBuilder) -> {
-			final List<Predicate> predicatesList = Collections.emptyList();
+			final List<Predicate> predicatesList = new ArrayList<>();
 
 			fieldFilters.forEach(filter -> {
 				predicatesList.add(filter.getQueryPredicate().getPredicate(criteriaBuilder, root, filter));
