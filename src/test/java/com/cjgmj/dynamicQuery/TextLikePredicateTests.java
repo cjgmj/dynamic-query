@@ -36,7 +36,7 @@ class TextLikePredicateTests {
 
 	@Test
 	void shouldGetResultWithAccentMark() {
-		final FieldFilter fieldFilter = new TextLikeFieldFilter("name", "óh");
+		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "óh");
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -60,7 +60,7 @@ class TextLikePredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMark() {
-		final FieldFilter fieldFilter = new TextLikeFieldFilter("name", "oh");
+		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "oh");
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -84,7 +84,7 @@ class TextLikePredicateTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkWithoutCharacterReplacement() {
-		final FieldFilter fieldFilter = new TextLikeFieldFilter("name", "óh");
+		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "óh");
 		final QueryPredicate queryPredicate = new TextLikePredicate().defineCharactersReplacement(null);
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -108,7 +108,7 @@ class TextLikePredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacement() {
-		final FieldFilter fieldFilter = new TextLikeFieldFilter("name", "oh");
+		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "oh");
 		final QueryPredicate queryPredicate = new TextLikePredicate().defineCharactersReplacement(null);
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -132,7 +132,7 @@ class TextLikePredicateTests {
 
 	@Test
 	void shouldNotGetResultWithAccentMarkWithoutCharacterReplacementNorNormalizeText() {
-		final FieldFilter fieldFilter = new TextLikeFieldFilter("name", "óh");
+		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "óh");
 		final QueryPredicate queryPredicate = new TextLikePredicate().defineCharactersReplacement(null)
 				.noNormalizeText();
 
@@ -155,7 +155,7 @@ class TextLikePredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacementNorNormalizeText() {
-		final FieldFilter fieldFilter = new TextLikeFieldFilter("name", "oh");
+		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "oh");
 		final QueryPredicate queryPredicate = new TextLikePredicate().defineCharactersReplacement(null)
 				.noNormalizeText();
 

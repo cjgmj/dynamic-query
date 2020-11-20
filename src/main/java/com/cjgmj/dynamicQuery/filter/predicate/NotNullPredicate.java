@@ -11,7 +11,7 @@ public class NotNullPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			FieldFilter fieldFilter) {
+			FieldFilter<?> fieldFilter) {
 		return criteriaBuilder.isNotNull(expression);
 	}
 

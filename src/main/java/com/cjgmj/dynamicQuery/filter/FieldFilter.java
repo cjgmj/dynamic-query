@@ -7,10 +7,10 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public abstract class FieldFilter {
+public abstract class FieldFilter<T> {
 
 	private String field;
-	private String value;
+	private T value;
 
 	public abstract QueryPredicate getQueryPredicate();
 

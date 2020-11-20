@@ -13,7 +13,7 @@ import com.cjgmj.dynamicQuery.filter.FieldFilter;
 @Component
 public class QuerySpecification<T> {
 
-	public Specification<T> specificSearchs(List<FieldFilter> fieldFilters) {
+	public Specification<T> specificSearchs(List<FieldFilter<?>> fieldFilters) {
 		return (root, criteriaQuery, criteriaBuilder) -> {
 			final List<Predicate> predicatesList = Collections.emptyList();
 
@@ -26,7 +26,7 @@ public class QuerySpecification<T> {
 		};
 	}
 
-	public Specification<T> globalSearchs(List<FieldFilter> fieldFilters) {
+	public Specification<T> globalSearchs(List<FieldFilter<?>> fieldFilters) {
 		return (root, criteriaQuery, criteriaBuilder) -> {
 			final List<Predicate> predicatesList = Collections.emptyList();
 

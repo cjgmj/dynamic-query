@@ -12,9 +12,9 @@ import com.cjgmj.dynamicQuery.filter.FieldFilter;
 public interface QueryPredicate {
 
 	Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			FieldFilter fieldFilter);
+			FieldFilter<?> fieldFilter);
 
-	default Predicate getPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, FieldFilter fieldFilter) {
+	default Predicate getPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, FieldFilter<?> fieldFilter) {
 		Expression<String> expression = null;
 
 		final String[] relatedAttribute = fieldFilter.getField().split("[.]");

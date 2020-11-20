@@ -11,6 +11,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.cjgmj.dynamicQuery.filter.FieldFilter;
+import com.cjgmj.dynamicQuery.filter.TextFieldFilter;
 import com.cjgmj.dynamicQuery.filter.replace.CharacterReplacement;
 import com.cjgmj.dynamicQuery.filter.replace.CharacterReplacementHelper;
 
@@ -30,9 +31,9 @@ public abstract class TextPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			FieldFilter fieldFilter) {
+			FieldFilter<?> fieldFilter) {
 		return this.buildTextPredicate(criteriaBuilder, this.expressionNonSensitiveText(expression, criteriaBuilder),
-				this.transformTextToQuery(fieldFilter.getValue()));
+				this.transformTextToQuery(((TextFieldFilter) fieldFilter).getValue()));
 	}
 
 	protected abstract Predicate buildTextPredicate(CriteriaBuilder criteriaBuilder, Expression<String> expression,
