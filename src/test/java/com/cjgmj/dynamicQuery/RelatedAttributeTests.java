@@ -23,7 +23,7 @@ public class RelatedAttributeTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetResultFilteredByTheStreet() {
+	void shouldGetResultFilteredByAddressStreet() {
 		final ValueFilter<String> valueFilter = new TextLikeFilter("address.street", "ake");
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
@@ -41,7 +41,7 @@ public class RelatedAttributeTests {
 	}
 
 	@Test
-	void shouldGetResultFilteredByTheCityName() {
+	void shouldGetResultFilteredByAddressCityName() {
 		final ValueFilter<String> valueFilter = new TextLikeFilter("address.city.name", "mc");
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();

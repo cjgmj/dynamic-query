@@ -24,7 +24,7 @@ public class DateLessThanSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetResultWithBirthdayLessThan() {
+	void shouldGetResultFilteredByBirthdayLessThan() {
 		final ValueFilter<LocalDate> valueFilter = new DateLessThanFilter("birthday", LocalDate.of(1980, 7, 12));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
@@ -42,7 +42,7 @@ public class DateLessThanSpecificationTests {
 	}
 
 	@Test
-	void shouldGetResultWithBirthdayLessThanOrEqual() {
+	void shouldGetResultFilteredByBirthdayLessThanOrEqual() {
 		final ValueFilter<LocalDate> valueFilter = new DateLessThanFilter("birthday", LocalDate.of(1980, 7, 12))
 				.orEqual();
 

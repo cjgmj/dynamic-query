@@ -128,7 +128,24 @@ public class TextLikeSpecificationTests {
 	}
 
 	@Test
-	void shouldGetResultWithAccentMarkIntroducingListCharacterReplacementManually() {
+	void shouldGetResultWithAccentMarkAndBasicCharacterReplacement() {
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").basicReplacements();
+
+		final List<ValueFilter<?>> filters = new ArrayList<>();
+
+		filters.add(valueFilter);
+
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
+
+		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
+
+		assertEquals(1, dummies.size());
+		assertEquals("John", dummies.get(0).getName());
+	}
+
+	@Test
+	void shouldGetResultWithAccentMarkIntroducingListCharactersReplacement() {
 
 		final List<CharacterReplacement> charactersReplacement = new ArrayList<>();
 
@@ -136,41 +153,6 @@ public class TextLikeSpecificationTests {
 
 		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").emptyReplacements()
 				.addListCharactersReplacement(charactersReplacement);
-
-		final List<ValueFilter<?>> filters = new ArrayList<>();
-
-		filters.add(valueFilter);
-
-		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
-
-		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
-
-		assertEquals(1, dummies.size());
-		assertEquals("John", dummies.get(0).getName());
-	}
-
-	@Test
-	void shouldGetResultWithAccentMarkIntroducingCharacterReplacementManually() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").emptyReplacements()
-				.addCharacterReplacement(CharacterReplacement.O_ACUTE);
-
-		final List<ValueFilter<?>> filters = new ArrayList<>();
-
-		filters.add(valueFilter);
-
-		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
-
-		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
-
-		assertEquals(1, dummies.size());
-		assertEquals("John", dummies.get(0).getName());
-	}
-
-	@Test
-	void shouldGetResultWithAccentMarkBasicCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").basicReplacements();
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -204,9 +186,9 @@ public class TextLikeSpecificationTests {
 	}
 
 	@Test
-	void shouldGetResultWithAccentMarkRemovingCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").basicReplacements()
-				.removeReplacement(CharacterReplacement.O_ACUTE);
+	void shouldGetResultWithAccentMarkIntroducingCharacterReplacement() {
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").emptyReplacements()
+				.addCharacterReplacement(CharacterReplacement.O_ACUTE);
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -225,6 +207,24 @@ public class TextLikeSpecificationTests {
 	void shouldGetResultWithAccentMarkRemovingCharacterReplacementNull() {
 		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").basicReplacements()
 				.removeReplacement(null);
+
+		final List<ValueFilter<?>> filters = new ArrayList<>();
+
+		filters.add(valueFilter);
+
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
+
+		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
+
+		assertEquals(1, dummies.size());
+		assertEquals("John", dummies.get(0).getName());
+	}
+
+	@Test
+	void shouldGetResultWithAccentMarkRemovingCharacterReplacement() {
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").basicReplacements()
+				.removeReplacement(CharacterReplacement.O_ACUTE);
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 

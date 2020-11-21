@@ -23,7 +23,7 @@ public class NumberSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetAllAttributeForSpecificDummy() {
+	void shouldGetResultFilteredById() {
 		final ValueFilter<Number> valueFilter = new NumberFilter("id", 1L);
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();

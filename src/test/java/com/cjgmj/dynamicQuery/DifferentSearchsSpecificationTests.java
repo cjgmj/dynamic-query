@@ -28,7 +28,7 @@ public class DifferentSearchsSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetAllRestrictiveSearchWithoutFilters() {
+	void shouldGetResultsWithRestrictiveSearchWithoutFilters() {
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
 				.restrictiveFilters(null).buildSpecification();
 
@@ -39,7 +39,7 @@ public class DifferentSearchsSpecificationTests {
 	}
 
 	@Test
-	void shouldGetAllWithRestrictiveSearch() {
+	void shouldGetResultsWithRestrictiveSearch() {
 		final ValueFilter<Void> notNullValueFilter = new NotNullFilter("customer");
 		final ValueFilter<String> textLikeValueFilter = new TextLikeFilter("surname", "doe");
 
@@ -58,7 +58,7 @@ public class DifferentSearchsSpecificationTests {
 	}
 
 	@Test
-	void shouldGetAllAttributesForSpecificDummy() {
+	void shouldGetAllAttributesForDummyFilteredById() {
 		final ValueFilter<Number> valueFilter = new NumberFilter("id", 2L);
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
@@ -85,7 +85,7 @@ public class DifferentSearchsSpecificationTests {
 	}
 
 	@Test
-	void shouldGetAllNonRestrictiveSearchWithoutFilters() {
+	void shouldGetResultsWithNonRestrictiveSearchWithoutFilters() {
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
 				.nonRestrictiveFilters(null).buildSpecification();
 
@@ -96,7 +96,7 @@ public class DifferentSearchsSpecificationTests {
 	}
 
 	@Test
-	void shouldGetAllWithNonRestrictiveSearch() {
+	void shouldGetResultsWithNonRestrictiveSearch() {
 		final ValueFilter<String> textLikeValueFilter = new TextLikeFilter("surname", "doe");
 		final ValueFilter<Boolean> falseValueFilter = new FalseFilter("customer");
 
@@ -117,7 +117,7 @@ public class DifferentSearchsSpecificationTests {
 	}
 
 	@Test
-	void shouldGetAllWithRestrictiveAndNonRestrictiveSearch() {
+	void shouldGetResultsWithRestrictiveAndNonRestrictiveSearch() {
 		final ValueFilter<String> textLikeEqualFilter = new TextEqualFilter("surname", "doe");
 		final ValueFilter<String> textLikeValueFilter = new TextLikeFilter("name", "j");
 		final ValueFilter<Boolean> falseValueFilter = new FalseFilter("customer");

@@ -28,7 +28,7 @@ public class OrderSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetAllWithListOrdersNull() {
+	void shouldGetResultWithListOrdersNull() {
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
 				.orderBy(null).buildSpecification();
 
@@ -39,7 +39,7 @@ public class OrderSpecificationTests {
 	}
 
 	@Test
-	void shouldGetAllOrderedByAscSurnameFilteredByCustomer() {
+	void shouldGetResultOrderedByAscSurnameFilteredByCustomer() {
 		final AscendingOrder ascendingOrder = new AscendingOrder("surname");
 		final TrueFilter trueFilter = new TrueFilter("customer");
 
@@ -59,7 +59,7 @@ public class OrderSpecificationTests {
 	}
 
 	@Test
-	void shouldGetAllOrderedByAscSurnameFilteredByCustomerAndBirthDay() {
+	void shouldGetResultOrderedByAscSurnameFilteredByCustomerAndBirthDay() {
 		final AscendingOrder ascendingOrder = new AscendingOrder("surname");
 		final TrueFilter trueFilter = new TrueFilter("customer");
 		final DateEqualFilter dateEqualFilter = new DateEqualFilter("birthday", LocalDate.of(1980, 07, 12));
@@ -81,7 +81,7 @@ public class OrderSpecificationTests {
 	}
 
 	@Test
-	void shouldGetAllOrderedByAscSurnameAndDescName() {
+	void shouldGetResultOrderedByAscSurnameAndDescName() {
 		final AscendingOrder ascendingOrder = new AscendingOrder("surname");
 		final DescendingOrder descendingOrder = new DescendingOrder("name");
 

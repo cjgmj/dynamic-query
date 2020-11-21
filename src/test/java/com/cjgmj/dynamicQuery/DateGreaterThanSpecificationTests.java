@@ -24,7 +24,7 @@ public class DateGreaterThanSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetResultWithBirthdayGreaterThan() {
+	void shouldGetResultFilteredByBirthdayGreaterThan() {
 		final ValueFilter<LocalDate> valueFilter = new DateGreaterThanFilter("birthday", LocalDate.of(1980, 7, 12));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
@@ -41,7 +41,7 @@ public class DateGreaterThanSpecificationTests {
 	}
 
 	@Test
-	void shouldGetResultWithBirthdayGreaterThanOrEqual() {
+	void shouldGetResultFilteredByBirthdayGreaterThanOrEqual() {
 		final ValueFilter<LocalDate> valueFilter = new DateGreaterThanFilter("birthday", LocalDate.of(1980, 7, 12))
 				.orEqual();
 

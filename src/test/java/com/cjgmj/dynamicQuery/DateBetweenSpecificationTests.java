@@ -24,7 +24,7 @@ public class DateBetweenSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetResultWithBirthdayBetweenDates() {
+	void shouldGetResultFilteredByBirthdayBetween() {
 		final ValueFilter<LocalDate> valueFilter = new DateBetweenFilter("birthday", LocalDate.of(1980, 7, 12),
 				LocalDate.of(1982, 11, 28));
 

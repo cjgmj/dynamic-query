@@ -23,7 +23,7 @@ public class NotNullSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetResultWithCustomerNotNull() {
+	void shouldGetResultFilteredByCustomerNotNull() {
 		final ValueFilter<Void> valueFilter = new NotNullFilter("customer");
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();

@@ -23,7 +23,7 @@ public class TrueSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetResultOfCustomers() {
+	void shouldGetResultFilteredByCustomerTrue() {
 		final ValueFilter<Boolean> valueFilter = new TrueFilter("customer");
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();

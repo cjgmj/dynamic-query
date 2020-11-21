@@ -23,7 +23,7 @@ public class FalseSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetResultOfNotCustomers() {
+	void shouldGetResultFilteredByCustomerFalse() {
 		final ValueFilter<Boolean> valueFilter = new FalseFilter("customer");
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();

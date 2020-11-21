@@ -24,7 +24,7 @@ public class DateEqualSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetResultWithSpecificBirthday() {
+	void shouldGetResultFilteredByBirthday() {
 		final ValueFilter<LocalDate> valueFilter = new DateEqualFilter("birthday", LocalDate.of(1980, 7, 12));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();

@@ -23,7 +23,7 @@ public class NullSpecificationTests {
 	private DummyRepository dummyRepository;
 
 	@Test
-	void shouldGetResultWithCustomerNull() {
+	void shouldGetResultFilteredByCustomerNull() {
 		final ValueFilter<Void> valueFilter = new NullFilter("customer");
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
