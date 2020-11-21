@@ -12,8 +12,8 @@ public class NumberPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			ValueFilter<?> fieldFilter) {
-		return criteriaBuilder.equal(expression, ((NumberFilter) fieldFilter).getValue());
+			ValueFilter<?> valueFilter) {
+		return criteriaBuilder.equal(expression, ((NumberFilter) valueFilter).getValue());
 	}
 
 }

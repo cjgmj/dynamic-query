@@ -14,8 +14,8 @@ public class DateBetweenPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			ValueFilter<?> fieldFilter) {
-		final DateBetweenFilter dateBetweenFieldFilter = (DateBetweenFilter) fieldFilter;
+			ValueFilter<?> valueFilter) {
+		final DateBetweenFilter dateBetweenFieldFilter = (DateBetweenFilter) valueFilter;
 
 		return criteriaBuilder.between(expression.as(LocalDate.class),
 				criteriaBuilder.literal(dateBetweenFieldFilter.getValue()),

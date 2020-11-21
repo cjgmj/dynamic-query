@@ -11,7 +11,7 @@ public class TruePredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			ValueFilter<?> fieldFilter) {
+			ValueFilter<?> valueFilter) {
 		return criteriaBuilder.isTrue(expression.as(Boolean.class));
 	}
 

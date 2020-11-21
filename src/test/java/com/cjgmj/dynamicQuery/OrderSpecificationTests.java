@@ -2,6 +2,7 @@ package com.cjgmj.dynamicQuery;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.cjgmj.dynamicQuery.modifier.FieldOrder;
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
+import com.cjgmj.dynamicQuery.modifier.filter.DateEqualFilter;
+import com.cjgmj.dynamicQuery.modifier.filter.TrueFilter;
 import com.cjgmj.dynamicQuery.modifier.order.AscendingOrder;
 import com.cjgmj.dynamicQuery.modifier.order.DescendingOrder;
 import com.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
@@ -32,6 +36,48 @@ public class OrderSpecificationTests {
 
 		assertEquals(4, dummies.size());
 		assertEquals("Joe", dummies.get(0).getName());
+	}
+
+	@Test
+	void shouldGetAllOrderedByAscSurnameFilteredByCustomer() {
+		final AscendingOrder ascendingOrder = new AscendingOrder("surname");
+		final TrueFilter trueFilter = new TrueFilter("customer");
+
+		final List<FieldOrder> orders = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
+
+		orders.add(ascendingOrder);
+		filters.add(trueFilter);
+
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).orderBy(orders).buildSpecification();
+
+		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
+
+		assertEquals(2, dummies.size());
+		assertEquals("John", dummies.get(0).getName());
+	}
+
+	@Test
+	void shouldGetAllOrderedByAscSurnameFilteredByCustomerAndBirthDay() {
+		final AscendingOrder ascendingOrder = new AscendingOrder("surname");
+		final TrueFilter trueFilter = new TrueFilter("customer");
+		final DateEqualFilter dateEqualFilter = new DateEqualFilter("birthday", LocalDate.of(1980, 07, 12));
+
+		final List<FieldOrder> orders = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
+
+		orders.add(ascendingOrder);
+		filters.add(trueFilter);
+		filters.add(dateEqualFilter);
+
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).orderBy(orders).buildSpecification();
+
+		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
+
+		assertEquals(1, dummies.size());
+		assertEquals("John", dummies.get(0).getName());
 	}
 
 	@Test

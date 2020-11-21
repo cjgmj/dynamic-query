@@ -14,15 +14,15 @@ public class DateGreaterThanPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			ValueFilter<?> fieldFilter) {
-		final DateGreaterThanFilter dateGreaterThanFieldFilter = (DateGreaterThanFilter) fieldFilter;
+			ValueFilter<?> valueFilter) {
+		final DateGreaterThanFilter dateGreaterThanValueFilter = (DateGreaterThanFilter) valueFilter;
 
-		if (dateGreaterThanFieldFilter.getOrEqual()) {
+		if (dateGreaterThanValueFilter.getOrEqual()) {
 			return criteriaBuilder.greaterThanOrEqualTo(expression.as(LocalDate.class),
-					criteriaBuilder.literal(dateGreaterThanFieldFilter.getValue()));
+					criteriaBuilder.literal(dateGreaterThanValueFilter.getValue()));
 		} else {
 			return criteriaBuilder.greaterThan(expression.as(LocalDate.class),
-					criteriaBuilder.literal(dateGreaterThanFieldFilter.getValue()));
+					criteriaBuilder.literal(dateGreaterThanValueFilter.getValue()));
 		}
 	}
 }

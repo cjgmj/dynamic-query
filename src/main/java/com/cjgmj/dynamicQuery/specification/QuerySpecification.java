@@ -26,9 +26,9 @@ public class QuerySpecification<T> {
 		return new QuerySpecification<>();
 	}
 
-	public QuerySpecification<T> restrictiveFilters(List<ValueFilter<?>> fieldFilters) {
+	public QuerySpecification<T> restrictiveFilters(List<ValueFilter<?>> valueFilters) {
 		final Specification<T> newSpecification = (root, criteriaQuery, criteriaBuilder) -> {
-			final List<Predicate> predicatesList = this.getPredicateList(criteriaBuilder, root, fieldFilters);
+			final List<Predicate> predicatesList = this.getPredicateList(criteriaBuilder, root, valueFilters);
 
 			return predicatesList.isEmpty() ? null
 					: criteriaBuilder.and(predicatesList.toArray(new Predicate[predicatesList.size()]));
@@ -39,9 +39,9 @@ public class QuerySpecification<T> {
 		return this;
 	}
 
-	public QuerySpecification<T> nonRestrictiveFilters(List<ValueFilter<?>> fieldFilters) {
+	public QuerySpecification<T> nonRestrictiveFilters(List<ValueFilter<?>> valueFilters) {
 		final Specification<T> newSpecification = (root, criteriaQuery, criteriaBuilder) -> {
-			final List<Predicate> predicatesList = this.getPredicateList(criteriaBuilder, root, fieldFilters);
+			final List<Predicate> predicatesList = this.getPredicateList(criteriaBuilder, root, valueFilters);
 
 			return predicatesList.isEmpty() ? null
 					: criteriaBuilder.or(predicatesList.toArray(new Predicate[predicatesList.size()]));
@@ -52,11 +52,11 @@ public class QuerySpecification<T> {
 		return this;
 	}
 
-	public QuerySpecification<T> orderBy(List<FieldOrder> fieldFilters) {
+	public QuerySpecification<T> orderBy(List<FieldOrder> orderFilters) {
 		final Specification<T> newSpecification = (root, criteriaQuery, criteriaBuilder) -> {
 			final List<Order> ordersList = new ArrayList<>();
 
-			Optional.ofNullable(fieldFilters).orElse(new ArrayList<>()).forEach(filter -> {
+			Optional.ofNullable(orderFilters).orElse(new ArrayList<>()).forEach(filter -> {
 				ordersList.add(filter.getOrder(criteriaBuilder, root));
 			});
 
@@ -77,10 +77,10 @@ public class QuerySpecification<T> {
 	}
 
 	private List<Predicate> getPredicateList(CriteriaBuilder criteriaBuilder, Root<?> root,
-			List<ValueFilter<?>> fieldFilters) {
+			List<ValueFilter<?>> valueFilters) {
 		final List<Predicate> predicatesList = new ArrayList<>();
 
-		Optional.ofNullable(fieldFilters).orElse(new ArrayList<>()).forEach(filter -> {
+		Optional.ofNullable(valueFilters).orElse(new ArrayList<>()).forEach(filter -> {
 			predicatesList.add(filter.getQueryPredicate().getPredicate(criteriaBuilder, root, filter));
 		});
 

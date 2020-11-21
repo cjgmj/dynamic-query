@@ -20,19 +20,19 @@ public abstract class TextPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			ValueFilter<?> fieldFilter) {
+			ValueFilter<?> valueFilter) {
 		return this.buildTextPredicate(criteriaBuilder,
-				this.expressionNonSensitiveText(expression, criteriaBuilder, fieldFilter),
-				this.transformTextToQuery(fieldFilter));
+				this.expressionNonSensitiveText(expression, criteriaBuilder, valueFilter),
+				this.transformTextToQuery(valueFilter));
 	}
 
 	protected abstract Predicate buildTextPredicate(CriteriaBuilder criteriaBuilder, Expression<String> expression,
 			String value);
 
 	private Expression<String> expressionNonSensitiveText(Expression<String> expression,
-			CriteriaBuilder criteriaBuilder, ValueFilter<?> fieldFilter) {
+			CriteriaBuilder criteriaBuilder, ValueFilter<?> valueFilter) {
 		expression = this.toLowerCase(expression, criteriaBuilder);
-		expression = this.replaceCharacters(expression, criteriaBuilder, fieldFilter);
+		expression = this.replaceCharacters(expression, criteriaBuilder, valueFilter);
 
 		return expression;
 	}
@@ -42,8 +42,8 @@ public abstract class TextPredicate implements QueryPredicate {
 	}
 
 	private Expression<String> replaceCharacters(Expression<String> expression, CriteriaBuilder criteriaBuilder,
-			ValueFilter<?> fieldFilter) {
-		for (final CharacterReplacement rc : ((TextFilter) fieldFilter).getCharactersReplacement()) {
+			ValueFilter<?> valueFilter) {
+		for (final CharacterReplacement rc : ((TextFilter) valueFilter).getCharactersReplacement()) {
 			expression = criteriaBuilder.function(REPLACE, String.class, expression,
 					criteriaBuilder.literal(rc.getOldCharacter()), criteriaBuilder.literal(rc.getNewCharacter()));
 		}
@@ -51,15 +51,15 @@ public abstract class TextPredicate implements QueryPredicate {
 		return expression;
 	}
 
-	protected String transformTextToQuery(ValueFilter<?> fieldFilter) {
-		final TextFilter textFieldFilter = (TextFilter) fieldFilter;
-		String value = textFieldFilter.getValue();
+	protected String transformTextToQuery(ValueFilter<?> valueFilter) {
+		final TextFilter textValueFilter = (TextFilter) valueFilter;
+		String value = textValueFilter.getValue();
 
-		if (textFieldFilter.getNormalizeText()) {
+		if (textValueFilter.getNormalizeText()) {
 			value = Normalizer.normalize(value, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 		}
 
-		if (textFieldFilter instanceof TextLikeFilter) {
+		if (textValueFilter instanceof TextLikeFilter) {
 			return LIKE.concat(value).concat(LIKE);
 		} else {
 			return value;

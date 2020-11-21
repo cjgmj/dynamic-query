@@ -12,7 +12,7 @@ public class DateEqualPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			ValueFilter<?> fieldFilter) {
-		return criteriaBuilder.equal(expression, criteriaBuilder.literal(((DateEqualFilter) fieldFilter).getValue()));
+			ValueFilter<?> valueFilter) {
+		return criteriaBuilder.equal(expression, criteriaBuilder.literal(((DateEqualFilter) valueFilter).getValue()));
 	}
 }
