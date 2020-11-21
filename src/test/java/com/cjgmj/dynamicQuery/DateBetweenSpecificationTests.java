@@ -3,7 +3,6 @@ package com.cjgmj.dynamicQuery;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +26,11 @@ public class DateBetweenSpecificationTests {
 	@Autowired
 	private QuerySpecification<DummyEntity> querySpecification;
 
-	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
 	@Test
 	void shouldGetResultWithBirthdayBetweenDates() {
 
-		final FieldFilter<LocalDate> fieldFilter = new DateBetweenFieldFilter("birthday",
-				LocalDate.parse("1980-07-12", this.formatter), LocalDate.parse("1982-11-28", this.formatter));
+		final FieldFilter<LocalDate> fieldFilter = new DateBetweenFieldFilter("birthday", LocalDate.of(1980, 7, 12),
+				LocalDate.of(1982, 11, 28));
 
 		final List<FieldFilter<?>> filters = new ArrayList<>();
 
