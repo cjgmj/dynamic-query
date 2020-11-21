@@ -2,6 +2,7 @@ package com.cjgmj.dynamicQuery.specification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.criteria.Predicate;
 
@@ -13,11 +14,11 @@ import com.cjgmj.dynamicQuery.filter.FieldFilter;
 @Component
 public class QuerySpecification<T> {
 
-	public Specification<T> specificSearchs(List<FieldFilter<?>> fieldFilters) {
+	public Specification<T> restrictiveSearch(List<FieldFilter<?>> fieldFilters) {
 		return (root, criteriaQuery, criteriaBuilder) -> {
 			final List<Predicate> predicatesList = new ArrayList<>();
 
-			fieldFilters.forEach(filter -> {
+			Optional.ofNullable(fieldFilters).orElse(new ArrayList<>()).forEach(filter -> {
 				predicatesList.add(filter.getQueryPredicate().getPredicate(criteriaBuilder, root, filter));
 			});
 
@@ -26,7 +27,7 @@ public class QuerySpecification<T> {
 		};
 	}
 
-	public Specification<T> globalSearchs(List<FieldFilter<?>> fieldFilters) {
+	public Specification<T> nonRestrictiveSearch(List<FieldFilter<?>> fieldFilters) {
 		return (root, criteriaQuery, criteriaBuilder) -> {
 			final List<Predicate> predicatesList = new ArrayList<>();
 

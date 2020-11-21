@@ -39,7 +39,7 @@ public class DateGreaterThanSpecificationTests {
 
 		filters.add(fieldFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.specificSearchs(filters);
+		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -57,7 +57,7 @@ public class DateGreaterThanSpecificationTests {
 
 		filters.add(fieldFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.specificSearchs(filters);
+		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 

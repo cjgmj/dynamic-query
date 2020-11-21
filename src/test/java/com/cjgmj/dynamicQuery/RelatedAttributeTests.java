@@ -11,13 +11,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.cjgmj.dynamicQuery.filter.FieldFilter;
-import com.cjgmj.dynamicQuery.filter.TrueFieldFilter;
+import com.cjgmj.dynamicQuery.filter.TextLikeFieldFilter;
 import com.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
 import com.cjgmj.dynamicQuery.persistence.repository.DummyRepository;
 import com.cjgmj.dynamicQuery.specification.QuerySpecification;
 
 @SpringBootTest
-public class TrueSpecificationTests {
+public class RelatedAttributeTests {
 
 	@Autowired
 	private DummyRepository dummyRepository;
@@ -26,8 +26,8 @@ public class TrueSpecificationTests {
 	private QuerySpecification<DummyEntity> querySpecification;
 
 	@Test
-	void shouldGetResultOfCustomers() {
-		final FieldFilter<Boolean> fieldFilter = new TrueFieldFilter("customer");
+	void shouldGetResultFilteredByTheStreet() {
+		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("address.street", "ake");
 
 		final List<FieldFilter<?>> filters = new ArrayList<>();
 
@@ -37,10 +37,25 @@ public class TrueSpecificationTests {
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
-		this.dummyRepository.findAll();
+		assertEquals(1, dummies.size());
+		assertEquals("John", dummies.get(0).getName());
+		assertEquals("Fake street", dummies.get(0).getAddress().getStreet());
+	}
 
-		assertEquals(2, dummies.size());
-		assertEquals("Joe", dummies.get(0).getName());
-		assertEquals("John", dummies.get(1).getName());
+	@Test
+	void shouldGetResultFilteredByTheCityName() {
+		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("address.city.name", "mc");
+
+		final List<FieldFilter<?>> filters = new ArrayList<>();
+
+		filters.add(fieldFilter);
+
+		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+
+		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
+
+		assertEquals(1, dummies.size());
+		assertEquals("John", dummies.get(0).getName());
+		assertEquals("Mcity", dummies.get(0).getAddress().getCity().getName());
 	}
 }
