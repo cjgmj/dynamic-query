@@ -5,37 +5,79 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Component;
 
-import com.cjgmj.dynamicQuery.filter.FieldFilter;
+import com.cjgmj.dynamicQuery.modifier.FieldOrder;
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
 
-@Component
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QuerySpecification<T> {
 
-	public Specification<T> restrictiveSearch(List<FieldFilter<?>> fieldFilters) {
-		return (root, criteriaQuery, criteriaBuilder) -> {
+	private Specification<T> specification;
+
+	public static <T> QuerySpecification<T> getQuerySpecification() {
+		return new QuerySpecification<>();
+	}
+
+	public QuerySpecification<T> restrictiveFilters(List<ValueFilter<?>> fieldFilters) {
+		final Specification<T> newSpecification = (root, criteriaQuery, criteriaBuilder) -> {
 			final List<Predicate> predicatesList = this.getPredicateList(criteriaBuilder, root, fieldFilters);
 
 			return predicatesList.isEmpty() ? null
 					: criteriaBuilder.and(predicatesList.toArray(new Predicate[predicatesList.size()]));
 		};
+
+		this.specification = newSpecification.and(this.specification);
+
+		return this;
 	}
 
-	public Specification<T> nonRestrictiveSearch(List<FieldFilter<?>> fieldFilters) {
-		return (root, criteriaQuery, criteriaBuilder) -> {
+	public QuerySpecification<T> nonRestrictiveFilters(List<ValueFilter<?>> fieldFilters) {
+		final Specification<T> newSpecification = (root, criteriaQuery, criteriaBuilder) -> {
 			final List<Predicate> predicatesList = this.getPredicateList(criteriaBuilder, root, fieldFilters);
 
 			return predicatesList.isEmpty() ? null
 					: criteriaBuilder.or(predicatesList.toArray(new Predicate[predicatesList.size()]));
 		};
+
+		this.specification = newSpecification.or(this.specification);
+
+		return this;
+	}
+
+	public QuerySpecification<T> orderBy(List<FieldOrder> fieldFilters) {
+		final Specification<T> newSpecification = (root, criteriaQuery, criteriaBuilder) -> {
+			final List<Order> ordersList = new ArrayList<>();
+
+			Optional.ofNullable(fieldFilters).orElse(new ArrayList<>()).forEach(filter -> {
+				ordersList.add(filter.getOrder(criteriaBuilder, root));
+			});
+
+			if (!ordersList.isEmpty()) {
+				criteriaQuery.orderBy(ordersList.toArray(new Order[ordersList.size()]));
+			}
+
+			return criteriaQuery.getRestriction();
+		};
+
+		this.specification = newSpecification.or(this.specification);
+
+		return this;
+	}
+
+	public Specification<T> buildSpecification() {
+		return this.specification;
 	}
 
 	private List<Predicate> getPredicateList(CriteriaBuilder criteriaBuilder, Root<?> root,
-			List<FieldFilter<?>> fieldFilters) {
+			List<ValueFilter<?>> fieldFilters) {
 		final List<Predicate> predicatesList = new ArrayList<>();
 
 		Optional.ofNullable(fieldFilters).orElse(new ArrayList<>()).forEach(filter -> {

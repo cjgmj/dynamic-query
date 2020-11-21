@@ -1,30 +1,23 @@
-package com.cjgmj.dynamicQuery.filter;
+package com.cjgmj.dynamicQuery.modifier;
 
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 
-import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
-
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 
 @AllArgsConstructor
-@Getter
-public abstract class FieldFilter<T> {
+public abstract class FieldReference {
 
 	private String field;
-	private T value;
-
-	public abstract QueryPredicate getQueryPredicate();
 
 	public Expression<String> getExpression(Root<?> root) {
 		Expression<String> expression = null;
 
-		final String[] relatedAttribute = this.getField().split("[.]");
+		final String[] relatedAttribute = this.field.split("[.]");
 
 		if (relatedAttribute.length == 1) {
-			expression = root.get(this.getField());
+			expression = root.get(this.field);
 		} else {
 			Join<Object, Object> join = root.join(relatedAttribute[0]);
 			for (int i = 1; i < relatedAttribute.length - 1; i++) {

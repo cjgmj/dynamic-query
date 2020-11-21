@@ -7,10 +7,10 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.cjgmj.dynamicQuery.filter.FieldFilter;
-import com.cjgmj.dynamicQuery.filter.TextFieldFilter;
-import com.cjgmj.dynamicQuery.filter.TextLikeFieldFilter;
 import com.cjgmj.dynamicQuery.filter.replacement.CharacterReplacement;
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
+import com.cjgmj.dynamicQuery.modifier.filter.TextFilter;
+import com.cjgmj.dynamicQuery.modifier.filter.TextLikeFilter;
 
 public abstract class TextPredicate implements QueryPredicate {
 
@@ -20,7 +20,7 @@ public abstract class TextPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			FieldFilter<?> fieldFilter) {
+			ValueFilter<?> fieldFilter) {
 		return this.buildTextPredicate(criteriaBuilder,
 				this.expressionNonSensitiveText(expression, criteriaBuilder, fieldFilter),
 				this.transformTextToQuery(fieldFilter));
@@ -30,7 +30,7 @@ public abstract class TextPredicate implements QueryPredicate {
 			String value);
 
 	private Expression<String> expressionNonSensitiveText(Expression<String> expression,
-			CriteriaBuilder criteriaBuilder, FieldFilter<?> fieldFilter) {
+			CriteriaBuilder criteriaBuilder, ValueFilter<?> fieldFilter) {
 		expression = this.toLowerCase(expression, criteriaBuilder);
 		expression = this.replaceCharacters(expression, criteriaBuilder, fieldFilter);
 
@@ -42,8 +42,8 @@ public abstract class TextPredicate implements QueryPredicate {
 	}
 
 	private Expression<String> replaceCharacters(Expression<String> expression, CriteriaBuilder criteriaBuilder,
-			FieldFilter<?> fieldFilter) {
-		for (final CharacterReplacement rc : ((TextFieldFilter) fieldFilter).getCharactersReplacement()) {
+			ValueFilter<?> fieldFilter) {
+		for (final CharacterReplacement rc : ((TextFilter) fieldFilter).getCharactersReplacement()) {
 			expression = criteriaBuilder.function(REPLACE, String.class, expression,
 					criteriaBuilder.literal(rc.getOldCharacter()), criteriaBuilder.literal(rc.getNewCharacter()));
 		}
@@ -51,15 +51,15 @@ public abstract class TextPredicate implements QueryPredicate {
 		return expression;
 	}
 
-	protected String transformTextToQuery(FieldFilter<?> fieldFilter) {
-		final TextFieldFilter textFieldFilter = (TextFieldFilter) fieldFilter;
+	protected String transformTextToQuery(ValueFilter<?> fieldFilter) {
+		final TextFilter textFieldFilter = (TextFilter) fieldFilter;
 		String value = textFieldFilter.getValue();
 
 		if (textFieldFilter.getNormalizeText()) {
 			value = Normalizer.normalize(value, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
 		}
 
-		if (textFieldFilter instanceof TextLikeFieldFilter) {
+		if (textFieldFilter instanceof TextLikeFilter) {
 			return LIKE.concat(value).concat(LIKE);
 		} else {
 			return value;

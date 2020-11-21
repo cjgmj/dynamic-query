@@ -1,18 +1,19 @@
-package com.cjgmj.dynamicQuery.filter;
+package com.cjgmj.dynamicQuery.modifier.filter;
 
 import java.time.LocalDate;
 
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
 import com.cjgmj.dynamicQuery.predicate.DateLessThanPredicate;
 import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
 
 import lombok.Getter;
 
 @Getter
-public class DateLessThanFieldFilter extends FieldFilter<LocalDate> {
+public class DateLessThanFilter extends ValueFilter<LocalDate> {
 
 	private Boolean orEqual;
 
-	public DateLessThanFieldFilter(String field, LocalDate value) {
+	public DateLessThanFilter(String field, LocalDate value) {
 		super(field, value);
 		this.orEqual = Boolean.FALSE;
 	}
@@ -22,7 +23,7 @@ public class DateLessThanFieldFilter extends FieldFilter<LocalDate> {
 		return new DateLessThanPredicate();
 	}
 
-	public DateLessThanFieldFilter orEqual() {
+	public DateLessThanFilter orEqual() {
 		this.orEqual = Boolean.TRUE;
 
 		return this;

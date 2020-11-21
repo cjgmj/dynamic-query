@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.cjgmj.dynamicQuery.filter.FieldFilter;
-import com.cjgmj.dynamicQuery.filter.TrueFieldFilter;
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
+import com.cjgmj.dynamicQuery.modifier.filter.TrueFilter;
 import com.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
 import com.cjgmj.dynamicQuery.persistence.repository.DummyRepository;
 import com.cjgmj.dynamicQuery.specification.QuerySpecification;
@@ -22,18 +22,16 @@ public class TrueSpecificationTests {
 	@Autowired
 	private DummyRepository dummyRepository;
 
-	@Autowired
-	private QuerySpecification<DummyEntity> querySpecification;
-
 	@Test
 	void shouldGetResultOfCustomers() {
-		final FieldFilter<Boolean> fieldFilter = new TrueFieldFilter("customer");
+		final ValueFilter<Boolean> valueFilter = new TrueFilter("customer");
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 

@@ -1,4 +1,4 @@
-package com.cjgmj.dynamicQuery.filter;
+package com.cjgmj.dynamicQuery.modifier.filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,46 +8,47 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.cjgmj.dynamicQuery.filter.replacement.CharacterReplacement;
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
 
 import lombok.Getter;
 
 @Getter
-public abstract class TextFieldFilter extends FieldFilter<String> {
+public abstract class TextFilter extends ValueFilter<String> {
 
 	private Boolean normalizeText = Boolean.TRUE;
 
 	private List<CharacterReplacement> charactersReplacement;
 
-	public TextFieldFilter(String field, String value) {
+	public TextFilter(String field, String value) {
 		super(field, value);
 		this.charactersReplacement = this.getBasicReplacements();
 	}
 
-	public TextFieldFilter noNormalizeText() {
+	public TextFilter noNormalizeText() {
 		this.normalizeText = Boolean.FALSE;
 
 		return this;
 	}
 
-	public TextFieldFilter emptyReplacements() {
+	public TextFilter emptyReplacements() {
 		this.charactersReplacement = this.getEmptyReplacements();
 
 		return this;
 	}
 
-	public TextFieldFilter basicReplacements() {
+	public TextFilter basicReplacements() {
 		this.charactersReplacement = this.getBasicReplacements();
 
 		return this;
 	}
 
-	public TextFieldFilter addListCharactersReplacement(List<CharacterReplacement> charactersReplacement) {
+	public TextFilter addListCharactersReplacement(List<CharacterReplacement> charactersReplacement) {
 		this.charactersReplacement = Optional.ofNullable(charactersReplacement).orElse(this.getEmptyReplacements());
 
 		return this;
 	}
 
-	public TextFieldFilter addCharacterReplacement(CharacterReplacement characterReplacement) {
+	public TextFilter addCharacterReplacement(CharacterReplacement characterReplacement) {
 		if (characterReplacement == null) {
 			this.charactersReplacement = this.getEmptyReplacements();
 		} else {
@@ -57,7 +58,7 @@ public abstract class TextFieldFilter extends FieldFilter<String> {
 		return this;
 	}
 
-	public TextFieldFilter removeReplacement(CharacterReplacement replaceCharacter) {
+	public TextFilter removeReplacement(CharacterReplacement replaceCharacter) {
 		this.charactersReplacement.remove(replaceCharacter);
 
 		return this;

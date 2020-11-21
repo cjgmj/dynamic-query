@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.cjgmj.dynamicQuery.filter.FieldFilter;
-import com.cjgmj.dynamicQuery.filter.NotNullFieldFilter;
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
+import com.cjgmj.dynamicQuery.modifier.filter.NotNullFilter;
 import com.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
 import com.cjgmj.dynamicQuery.persistence.repository.DummyRepository;
 import com.cjgmj.dynamicQuery.specification.QuerySpecification;
@@ -22,18 +22,16 @@ public class NotNullSpecificationTests {
 	@Autowired
 	private DummyRepository dummyRepository;
 
-	@Autowired
-	private QuerySpecification<DummyEntity> querySpecification;
-
 	@Test
 	void shouldGetResultWithCustomerNotNull() {
-		final FieldFilter<Void> fieldFilter = new NotNullFieldFilter("customer");
+		final ValueFilter<Void> valueFilter = new NotNullFilter("customer");
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 

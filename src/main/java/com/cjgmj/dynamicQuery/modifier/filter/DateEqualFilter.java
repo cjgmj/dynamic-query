@@ -1,13 +1,14 @@
-package com.cjgmj.dynamicQuery.filter;
+package com.cjgmj.dynamicQuery.modifier.filter;
 
 import java.time.LocalDate;
 
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
 import com.cjgmj.dynamicQuery.predicate.DateEqualPredicate;
 import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
 
-public class DateEqualFieldFilter extends FieldFilter<LocalDate> {
+public class DateEqualFilter extends ValueFilter<LocalDate> {
 
-	public DateEqualFieldFilter(String field, LocalDate value) {
+	public DateEqualFilter(String field, LocalDate value) {
 		super(field, value);
 	}
 

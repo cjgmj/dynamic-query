@@ -1,11 +1,12 @@
-package com.cjgmj.dynamicQuery.filter;
+package com.cjgmj.dynamicQuery.modifier.filter;
 
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
 import com.cjgmj.dynamicQuery.predicate.NullPredicate;
 import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
 
-public class NullFieldFilter extends FieldFilter<Void> {
+public class NullFilter extends ValueFilter<Void> {
 
-	public NullFieldFilter(String field) {
+	public NullFilter(String field) {
 		super(field, null);
 	}
 

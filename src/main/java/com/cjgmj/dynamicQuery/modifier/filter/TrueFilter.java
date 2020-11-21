@@ -1,11 +1,12 @@
-package com.cjgmj.dynamicQuery.filter;
+package com.cjgmj.dynamicQuery.modifier.filter;
 
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
 import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
 import com.cjgmj.dynamicQuery.predicate.TruePredicate;
 
-public class TrueFieldFilter extends FieldFilter<Boolean> {
+public class TrueFilter extends ValueFilter<Boolean> {
 
-	public TrueFieldFilter(String field) {
+	public TrueFilter(String field) {
 		super(field, Boolean.TRUE);
 	}
 

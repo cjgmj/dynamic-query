@@ -1,11 +1,11 @@
-package com.cjgmj.dynamicQuery.filter;
+package com.cjgmj.dynamicQuery.modifier.filter;
 
 import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
 import com.cjgmj.dynamicQuery.predicate.TextEqualPredicate;
 
-public class TextEqualFieldFilter extends TextFieldFilter {
+public class TextEqualFilter extends TextFilter {
 
-	public TextEqualFieldFilter(String field, String value) {
+	public TextEqualFilter(String field, String value) {
 		super(field, value);
 	}
 

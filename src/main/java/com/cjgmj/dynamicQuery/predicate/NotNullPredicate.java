@@ -5,13 +5,13 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.cjgmj.dynamicQuery.filter.FieldFilter;
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
 
 public class NotNullPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			FieldFilter<?> fieldFilter) {
+			ValueFilter<?> fieldFilter) {
 		return criteriaBuilder.isNotNull(expression);
 	}
 

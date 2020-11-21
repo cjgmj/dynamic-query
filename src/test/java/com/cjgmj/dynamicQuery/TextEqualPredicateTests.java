@@ -16,10 +16,10 @@ import javax.persistence.criteria.Root;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.cjgmj.dynamicQuery.filter.FieldFilter;
-import com.cjgmj.dynamicQuery.filter.TextEqualFieldFilter;
-import com.cjgmj.dynamicQuery.filter.TextLikeFieldFilter;
 import com.cjgmj.dynamicQuery.filter.replacement.CharacterReplacement;
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
+import com.cjgmj.dynamicQuery.modifier.filter.TextEqualFilter;
+import com.cjgmj.dynamicQuery.modifier.filter.TextLikeFilter;
 import com.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
 import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
 import com.cjgmj.dynamicQuery.predicate.TextLikePredicate;
@@ -37,7 +37,7 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithAccentMark() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn");
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn");
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -47,11 +47,11 @@ class TextEqualPredicateTests {
 		final List<DummyEntity> queryExpect = this.entityManager
 				.createQuery(
 						QUERY_SELECT.concat(QUERY_FROM).concat(this.createWhereTextQuery())
-								.concat(this.transformTextToQuery(fieldFilter.getValue(), Boolean.TRUE).concat("'")),
+								.concat(this.transformTextToQuery(valueFilter.getValue(), Boolean.TRUE).concat("'")),
 						DummyEntity.class)
 				.getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, valueFilter);
 		final List<DummyEntity> queryResult = this.entityManager
 				.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
 
@@ -61,7 +61,7 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMark() {
-		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "john");
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john");
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -71,11 +71,11 @@ class TextEqualPredicateTests {
 		final List<DummyEntity> queryExpect = this.entityManager
 				.createQuery(
 						QUERY_SELECT.concat(QUERY_FROM).concat(this.createWhereTextQuery())
-								.concat(this.transformTextToQuery(fieldFilter.getValue(), Boolean.TRUE).concat("'")),
+								.concat(this.transformTextToQuery(valueFilter.getValue(), Boolean.TRUE).concat("'")),
 						DummyEntity.class)
 				.getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, valueFilter);
 		final List<DummyEntity> queryResult = this.entityManager
 				.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
 
@@ -85,8 +85,7 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkWithoutCharacterReplacement() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn")
-				.addListCharactersReplacement(null);
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").addListCharactersReplacement(null);
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -96,11 +95,11 @@ class TextEqualPredicateTests {
 		final List<DummyEntity> queryExpect = this.entityManager
 				.createQuery(
 						QUERY_SELECT.concat(QUERY_FROM).concat(this.createWhereTextQuery())
-								.concat(this.transformTextToQuery(fieldFilter.getValue(), Boolean.TRUE).concat("'")),
+								.concat(this.transformTextToQuery(valueFilter.getValue(), Boolean.TRUE).concat("'")),
 						DummyEntity.class)
 				.getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, valueFilter);
 		final List<DummyEntity> queryResult = this.entityManager
 				.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
 
@@ -110,8 +109,7 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacement() {
-		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "john")
-				.addListCharactersReplacement(null);
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john").addListCharactersReplacement(null);
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -121,11 +119,11 @@ class TextEqualPredicateTests {
 		final List<DummyEntity> queryExpect = this.entityManager
 				.createQuery(
 						QUERY_SELECT.concat(QUERY_FROM).concat(this.createWhereTextQuery())
-								.concat(this.transformTextToQuery(fieldFilter.getValue(), Boolean.TRUE).concat("'")),
+								.concat(this.transformTextToQuery(valueFilter.getValue(), Boolean.TRUE).concat("'")),
 						DummyEntity.class)
 				.getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, valueFilter);
 		final List<DummyEntity> queryResult = this.entityManager
 				.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
 
@@ -135,8 +133,8 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldNotGetResultWithAccentMarkWithoutCharacterReplacementNorNormalizeText() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn")
-				.addListCharactersReplacement(null).noNormalizeText();
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").addListCharactersReplacement(null)
+				.noNormalizeText();
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -145,10 +143,10 @@ class TextEqualPredicateTests {
 
 		final List<DummyEntity> queryExpect = this.entityManager.createQuery(
 				QUERY_SELECT.concat(QUERY_FROM).concat(this.createWhereTextQuery())
-						.concat(this.transformTextToQuery(fieldFilter.getValue(), Boolean.FALSE).concat("'")),
+						.concat(this.transformTextToQuery(valueFilter.getValue(), Boolean.FALSE).concat("'")),
 				DummyEntity.class).getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, valueFilter);
 		final List<DummyEntity> queryResult = this.entityManager
 				.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
 
@@ -158,8 +156,8 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacementNorNormalizeText() {
-		final FieldFilter<String> fieldFilter = new TextLikeFieldFilter("name", "john")
-				.addListCharactersReplacement(null).noNormalizeText();
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john").addListCharactersReplacement(null)
+				.noNormalizeText();
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -168,10 +166,10 @@ class TextEqualPredicateTests {
 
 		final List<DummyEntity> queryExpect = this.entityManager.createQuery(
 				QUERY_SELECT.concat(QUERY_FROM).concat(this.createWhereTextQuery())
-						.concat(this.transformTextToQuery(fieldFilter.getValue(), Boolean.FALSE).concat("'")),
+						.concat(this.transformTextToQuery(valueFilter.getValue(), Boolean.FALSE).concat("'")),
 				DummyEntity.class).getResultList();
 
-		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, fieldFilter);
+		final Predicate predicate = queryPredicate.getPredicate(criteriaBuilder, root, valueFilter);
 		final List<DummyEntity> queryResult = this.entityManager
 				.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
 

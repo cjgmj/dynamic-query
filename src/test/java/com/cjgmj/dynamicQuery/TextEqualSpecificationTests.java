@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.cjgmj.dynamicQuery.filter.FieldFilter;
-import com.cjgmj.dynamicQuery.filter.TextEqualFieldFilter;
 import com.cjgmj.dynamicQuery.filter.replacement.CharacterReplacement;
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
+import com.cjgmj.dynamicQuery.modifier.filter.TextEqualFilter;
 import com.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
 import com.cjgmj.dynamicQuery.persistence.repository.DummyRepository;
 import com.cjgmj.dynamicQuery.specification.QuerySpecification;
@@ -23,18 +23,16 @@ public class TextEqualSpecificationTests {
 	@Autowired
 	private DummyRepository dummyRepository;
 
-	@Autowired
-	private QuerySpecification<DummyEntity> querySpecification;
-
 	@Test
 	void shouldGetResultWithAccentMark() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn");
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn");
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -44,13 +42,14 @@ public class TextEqualSpecificationTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMark() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "john");
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "john");
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -60,14 +59,14 @@ public class TextEqualSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkWithoutCharacterReplacement() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn")
-				.addListCharactersReplacement(null);
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").addListCharactersReplacement(null);
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -77,14 +76,14 @@ public class TextEqualSpecificationTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacement() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "john")
-				.addListCharactersReplacement(null);
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "john").addListCharactersReplacement(null);
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -94,14 +93,15 @@ public class TextEqualSpecificationTests {
 
 	@Test
 	void shouldNotGetResultWithAccentMarkWithoutCharacterReplacementNorNormalizeText() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn")
-				.addListCharactersReplacement(null).noNormalizeText();
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").addListCharactersReplacement(null)
+				.noNormalizeText();
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -110,14 +110,15 @@ public class TextEqualSpecificationTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacementNorNormalizeText() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "john")
-				.addListCharactersReplacement(null).noNormalizeText();
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "john").addListCharactersReplacement(null)
+				.noNormalizeText();
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -133,14 +134,15 @@ public class TextEqualSpecificationTests {
 
 		charactersReplacement.add(CharacterReplacement.O_ACUTE);
 
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn").emptyReplacements()
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").emptyReplacements()
 				.addListCharactersReplacement(charactersReplacement);
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -150,14 +152,15 @@ public class TextEqualSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkIntroducingCharacterReplacementManually() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn").emptyReplacements()
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").emptyReplacements()
 				.addCharacterReplacement(CharacterReplacement.O_ACUTE);
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -167,13 +170,14 @@ public class TextEqualSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkBasicCharacterReplacement() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn").basicReplacements();
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").basicReplacements();
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -183,14 +187,15 @@ public class TextEqualSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkIntroducingCharacterReplacementNull() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn").basicReplacements()
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").basicReplacements()
 				.addCharacterReplacement(null);
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -200,14 +205,15 @@ public class TextEqualSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkRemovingCharacterReplacement() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn").basicReplacements()
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").basicReplacements()
 				.removeReplacement(CharacterReplacement.O_ACUTE);
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -217,14 +223,15 @@ public class TextEqualSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkRemovingCharacterReplacementNull() {
-		final FieldFilter<String> fieldFilter = new TextEqualFieldFilter("name", "jóhn").basicReplacements()
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").basicReplacements()
 				.removeReplacement(null);
 
-		final List<FieldFilter<?>> filters = new ArrayList<>();
+		final List<ValueFilter<?>> filters = new ArrayList<>();
 
-		filters.add(fieldFilter);
+		filters.add(valueFilter);
 
-		final Specification<DummyEntity> specification = this.querySpecification.restrictiveSearch(filters);
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).buildSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 

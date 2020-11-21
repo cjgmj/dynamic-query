@@ -7,15 +7,15 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.cjgmj.dynamicQuery.filter.DateLessThanFieldFilter;
-import com.cjgmj.dynamicQuery.filter.FieldFilter;
+import com.cjgmj.dynamicQuery.modifier.ValueFilter;
+import com.cjgmj.dynamicQuery.modifier.filter.DateLessThanFilter;
 
 public class DateLessThanPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			FieldFilter<?> fieldFilter) {
-		final DateLessThanFieldFilter dateLessThanFieldFilter = (DateLessThanFieldFilter) fieldFilter;
+			ValueFilter<?> fieldFilter) {
+		final DateLessThanFilter dateLessThanFieldFilter = (DateLessThanFilter) fieldFilter;
 
 		if (dateLessThanFieldFilter.getOrEqual()) {
 			return criteriaBuilder.lessThanOrEqualTo(expression.as(LocalDate.class),
