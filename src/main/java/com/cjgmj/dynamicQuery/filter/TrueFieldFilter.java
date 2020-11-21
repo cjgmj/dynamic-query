@@ -1,7 +1,7 @@
 package com.cjgmj.dynamicQuery.filter;
 
-import com.cjgmj.dynamicQuery.filter.predicate.QueryPredicate;
-import com.cjgmj.dynamicQuery.filter.predicate.TruePredicate;
+import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
+import com.cjgmj.dynamicQuery.predicate.TruePredicate;
 
 public class TrueFieldFilter extends FieldFilter<Boolean> {
 

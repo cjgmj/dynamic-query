@@ -19,10 +19,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.cjgmj.dynamicQuery.filter.FieldFilter;
 import com.cjgmj.dynamicQuery.filter.TextEqualFieldFilter;
 import com.cjgmj.dynamicQuery.filter.TextLikeFieldFilter;
-import com.cjgmj.dynamicQuery.filter.predicate.QueryPredicate;
-import com.cjgmj.dynamicQuery.filter.predicate.TextLikePredicate;
 import com.cjgmj.dynamicQuery.filter.replace.CharacterReplacement;
 import com.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
+import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
+import com.cjgmj.dynamicQuery.predicate.TextLikePredicate;
 
 @SpringBootTest
 class TextEqualPredicateTests {

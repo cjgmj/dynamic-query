@@ -1,7 +1,7 @@
 package com.cjgmj.dynamicQuery.filter;
 
-import com.cjgmj.dynamicQuery.filter.predicate.QueryPredicate;
-import com.cjgmj.dynamicQuery.filter.predicate.TextLikePredicate;
+import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
+import com.cjgmj.dynamicQuery.predicate.TextLikePredicate;
 
 public class TextLikeFieldFilter extends TextFieldFilter {
 

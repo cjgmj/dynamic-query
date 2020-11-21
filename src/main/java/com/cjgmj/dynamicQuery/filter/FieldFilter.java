@@ -1,6 +1,6 @@
 package com.cjgmj.dynamicQuery.filter;
 
-import com.cjgmj.dynamicQuery.filter.predicate.QueryPredicate;
+import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

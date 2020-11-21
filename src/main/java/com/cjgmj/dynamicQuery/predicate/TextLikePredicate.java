@@ -1,4 +1,4 @@
-package com.cjgmj.dynamicQuery.filter.predicate;
+package com.cjgmj.dynamicQuery.predicate;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;

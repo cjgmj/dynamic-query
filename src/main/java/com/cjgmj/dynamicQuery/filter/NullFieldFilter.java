@@ -1,7 +1,7 @@
 package com.cjgmj.dynamicQuery.filter;
 
-import com.cjgmj.dynamicQuery.filter.predicate.NullPredicate;
-import com.cjgmj.dynamicQuery.filter.predicate.QueryPredicate;
+import com.cjgmj.dynamicQuery.predicate.NullPredicate;
+import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
 
 public class NullFieldFilter extends FieldFilter<Void> {
 

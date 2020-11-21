@@ -14,7 +14,7 @@ import com.cjgmj.dynamicQuery.filter.FieldFilter;
 import com.cjgmj.dynamicQuery.filter.TextLikeFieldFilter;
 import com.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
 import com.cjgmj.dynamicQuery.persistence.repository.DummyRepository;
-import com.cjgmj.dynamicQuery.query.QuerySpecification;
+import com.cjgmj.dynamicQuery.specification.QuerySpecification;
 
 @SpringBootTest
 public class TextLikeSpecificationTests {

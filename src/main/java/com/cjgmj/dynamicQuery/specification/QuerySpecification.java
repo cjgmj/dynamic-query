@@ -1,4 +1,4 @@
-package com.cjgmj.dynamicQuery.query;
+package com.cjgmj.dynamicQuery.specification;
 
 import java.util.ArrayList;
 import java.util.List;
