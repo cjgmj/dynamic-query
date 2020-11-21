@@ -6,13 +6,14 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.cjgmj.dynamicQuery.filter.FieldFilter;
+import com.cjgmj.dynamicQuery.filter.NumberFieldFilter;
 
-public class TruePredicate implements QueryPredicate {
+public class NumberPredicate implements QueryPredicate {
 
 	@Override
 	public Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
 			FieldFilter<?> fieldFilter) {
-		return criteriaBuilder.isTrue(expression.as(Boolean.class));
+		return criteriaBuilder.equal(expression, ((NumberFieldFilter) fieldFilter).getValue());
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.cjgmj.dynamicQuery.filter.replace;
+package com.cjgmj.dynamicQuery.filter.replacement;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -10,7 +10,7 @@ import javax.persistence.criteria.Root;
 import com.cjgmj.dynamicQuery.filter.FieldFilter;
 import com.cjgmj.dynamicQuery.filter.TextFieldFilter;
 import com.cjgmj.dynamicQuery.filter.TextLikeFieldFilter;
-import com.cjgmj.dynamicQuery.filter.replace.CharacterReplacement;
+import com.cjgmj.dynamicQuery.filter.replacement.CharacterReplacement;
 
 public abstract class TextPredicate implements QueryPredicate {
 
