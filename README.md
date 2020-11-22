@@ -16,6 +16,8 @@ You must not use `Collection.emptyList()` nor `Arrays.asList()` because it creat
 
 ## Dependency
 
+[Repository link](https://mvnrepository.com/artifact/com.github.cjgmj/dynamic-query)
+
 - Maven
 
 ```xml
@@ -24,4 +26,10 @@ You must not use `Collection.emptyList()` nor `Arrays.asList()` because it creat
         <artifactId>dynamic-query</artifactId>
         <version>1.0</version>
     </dependency>
+```
+
+- Gradle
+
+```gradle
+    compile('com.github.cjgmj:dynamic-query:1.0')
 ```
