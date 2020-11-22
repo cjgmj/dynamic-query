@@ -16,13 +16,13 @@ import javax.persistence.criteria.Root;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.cjgmj.dynamicQuery.filter.replacement.CharacterReplacement;
 import com.cjgmj.dynamicQuery.modifier.ValueFilter;
 import com.cjgmj.dynamicQuery.modifier.filter.TextEqualFilter;
 import com.cjgmj.dynamicQuery.modifier.filter.TextLikeFilter;
 import com.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
 import com.cjgmj.dynamicQuery.predicate.QueryPredicate;
 import com.cjgmj.dynamicQuery.predicate.TextLikePredicate;
+import com.cjgmj.dynamicQuery.replacement.CharacterReplacement;
 
 @SpringBootTest
 class TextEqualPredicateTests {

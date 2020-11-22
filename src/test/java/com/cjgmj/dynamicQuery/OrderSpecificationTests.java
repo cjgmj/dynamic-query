@@ -30,7 +30,7 @@ public class OrderSpecificationTests {
 	@Test
 	void shouldGetResultWithListOrdersNull() {
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.orderBy(null).buildSpecification();
+				.orderBy(null).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -50,7 +50,7 @@ public class OrderSpecificationTests {
 		filters.add(trueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).orderBy(orders).buildSpecification();
+				.restrictiveFilters(filters).orderBy(orders).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -72,7 +72,7 @@ public class OrderSpecificationTests {
 		filters.add(dateEqualFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).orderBy(orders).buildSpecification();
+				.restrictiveFilters(filters).orderBy(orders).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -91,7 +91,7 @@ public class OrderSpecificationTests {
 		orders.add(descendingOrder);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.orderBy(orders).buildSpecification();
+				.orderBy(orders).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 

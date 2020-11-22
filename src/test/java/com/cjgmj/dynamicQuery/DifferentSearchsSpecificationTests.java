@@ -30,7 +30,7 @@ public class DifferentSearchsSpecificationTests {
 	@Test
 	void shouldGetResultsWithRestrictiveSearchWithoutFilters() {
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(null).buildSpecification();
+				.restrictiveFilters(null).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -49,7 +49,7 @@ public class DifferentSearchsSpecificationTests {
 		filters.add(textLikeValueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -66,7 +66,7 @@ public class DifferentSearchsSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -87,7 +87,7 @@ public class DifferentSearchsSpecificationTests {
 	@Test
 	void shouldGetResultsWithNonRestrictiveSearchWithoutFilters() {
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.nonRestrictiveFilters(null).buildSpecification();
+				.nonRestrictiveFilters(null).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -106,7 +106,7 @@ public class DifferentSearchsSpecificationTests {
 		filters.add(falseValueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.nonRestrictiveFilters(filters).buildSpecification();
+				.nonRestrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -131,7 +131,7 @@ public class DifferentSearchsSpecificationTests {
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
 				.nonRestrictiveFilters(filtersNonRestrictives).restrictiveFilters(filtersRestrictives)
-				.buildSpecification();
+				.getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 

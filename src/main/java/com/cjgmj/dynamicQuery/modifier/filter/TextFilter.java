@@ -7,8 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.cjgmj.dynamicQuery.filter.replacement.CharacterReplacement;
 import com.cjgmj.dynamicQuery.modifier.ValueFilter;
+import com.cjgmj.dynamicQuery.replacement.CharacterReplacement;
 
 import lombok.Getter;
 

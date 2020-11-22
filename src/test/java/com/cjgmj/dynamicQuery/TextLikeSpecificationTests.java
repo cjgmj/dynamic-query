@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.cjgmj.dynamicQuery.filter.replacement.CharacterReplacement;
 import com.cjgmj.dynamicQuery.modifier.ValueFilter;
 import com.cjgmj.dynamicQuery.modifier.filter.TextLikeFilter;
 import com.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
 import com.cjgmj.dynamicQuery.persistence.repository.DummyRepository;
+import com.cjgmj.dynamicQuery.replacement.CharacterReplacement;
 import com.cjgmj.dynamicQuery.specification.QuerySpecification;
 
 @SpringBootTest
@@ -32,7 +32,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -49,7 +49,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -66,7 +66,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -83,7 +83,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -101,7 +101,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -118,7 +118,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -136,7 +136,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -159,7 +159,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -177,7 +177,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -195,7 +195,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -213,7 +213,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -231,7 +231,7 @@ public class TextLikeSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 

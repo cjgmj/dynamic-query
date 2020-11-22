@@ -32,7 +32,7 @@ public class DateLessThanSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 
@@ -51,7 +51,7 @@ public class DateLessThanSpecificationTests {
 		filters.add(valueFilter);
 
 		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
-				.restrictiveFilters(filters).buildSpecification();
+				.restrictiveFilters(filters).getSpecification();
 
 		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
 

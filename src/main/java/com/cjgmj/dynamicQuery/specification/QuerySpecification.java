@@ -15,9 +15,11 @@ import com.cjgmj.dynamicQuery.modifier.FieldOrder;
 import com.cjgmj.dynamicQuery.modifier.ValueFilter;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class QuerySpecification<T> {
 
 	private Specification<T> specification;
@@ -70,10 +72,6 @@ public class QuerySpecification<T> {
 		this.specification = newSpecification.or(this.specification);
 
 		return this;
-	}
-
-	public Specification<T> buildSpecification() {
-		return this.specification;
 	}
 
 	private List<Predicate> getPredicateList(CriteriaBuilder criteriaBuilder, Root<?> root,
