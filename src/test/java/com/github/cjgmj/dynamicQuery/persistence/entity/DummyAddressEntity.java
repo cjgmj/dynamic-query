@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery.persistence.entity;
+package com.github.cjgmj.dynamicquery.persistence.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

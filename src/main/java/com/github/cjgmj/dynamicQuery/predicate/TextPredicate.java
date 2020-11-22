@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery.predicate;
+package com.github.cjgmj.dynamicquery.predicate;
 
 import java.text.Normalizer;
 
@@ -7,10 +7,10 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.github.cjgmj.dynamicQuery.modifier.ValueFilter;
-import com.github.cjgmj.dynamicQuery.modifier.filter.TextFilter;
-import com.github.cjgmj.dynamicQuery.modifier.filter.TextLikeFilter;
-import com.github.cjgmj.dynamicQuery.replacement.CharacterReplacement;
+import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
+import com.github.cjgmj.dynamicquery.modifier.filter.TextFilter;
+import com.github.cjgmj.dynamicquery.modifier.filter.TextLikeFilter;
+import com.github.cjgmj.dynamicquery.replacement.CharacterReplacement;
 
 public abstract class TextPredicate implements QueryPredicate {
 

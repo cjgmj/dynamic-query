@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery.modifier;
+package com.github.cjgmj.dynamicquery.modifier;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Order;

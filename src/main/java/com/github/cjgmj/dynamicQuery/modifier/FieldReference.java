@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery.modifier;
+package com.github.cjgmj.dynamicquery.modifier;
 
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;

@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery.predicate;
+package com.github.cjgmj.dynamicquery.predicate;
 
 import java.time.LocalDate;
 
@@ -7,8 +7,8 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import com.github.cjgmj.dynamicQuery.modifier.ValueFilter;
-import com.github.cjgmj.dynamicQuery.modifier.filter.DateGreaterThanFilter;
+import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
+import com.github.cjgmj.dynamicquery.modifier.filter.DateGreaterThanFilter;
 
 public class DateGreaterThanPredicate implements QueryPredicate {
 

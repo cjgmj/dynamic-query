@@ -1,8 +1,8 @@
-package com.github.cjgmj.dynamicQuery.modifier.filter;
+package com.github.cjgmj.dynamicquery.modifier.filter;
 
-import com.github.cjgmj.dynamicQuery.modifier.ValueFilter;
-import com.github.cjgmj.dynamicQuery.predicate.QueryPredicate;
-import com.github.cjgmj.dynamicQuery.predicate.TruePredicate;
+import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
+import com.github.cjgmj.dynamicquery.predicate.QueryPredicate;
+import com.github.cjgmj.dynamicquery.predicate.TruePredicate;
 
 public class TrueFilter extends ValueFilter<Boolean> {
 

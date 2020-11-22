@@ -1,10 +1,10 @@
-package com.github.cjgmj.dynamicQuery.modifier.filter;
+package com.github.cjgmj.dynamicquery.modifier.filter;
 
 import java.time.LocalDate;
 
-import com.github.cjgmj.dynamicQuery.modifier.ValueFilter;
-import com.github.cjgmj.dynamicQuery.predicate.DateBetweenPredicate;
-import com.github.cjgmj.dynamicQuery.predicate.QueryPredicate;
+import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
+import com.github.cjgmj.dynamicquery.predicate.DateBetweenPredicate;
+import com.github.cjgmj.dynamicquery.predicate.QueryPredicate;
 
 import lombok.Getter;
 

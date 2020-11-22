@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery.modifier.filter;
+package com.github.cjgmj.dynamicquery.modifier.filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,8 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.github.cjgmj.dynamicQuery.modifier.ValueFilter;
-import com.github.cjgmj.dynamicQuery.replacement.CharacterReplacement;
+import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
+import com.github.cjgmj.dynamicquery.replacement.CharacterReplacement;
 
 import lombok.Getter;
 

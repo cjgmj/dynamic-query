@@ -1,6 +1,6 @@
-package com.github.cjgmj.dynamicQuery.modifier;
+package com.github.cjgmj.dynamicquery.modifier;
 
-import com.github.cjgmj.dynamicQuery.predicate.QueryPredicate;
+import com.github.cjgmj.dynamicquery.predicate.QueryPredicate;
 
 import lombok.Getter;
 

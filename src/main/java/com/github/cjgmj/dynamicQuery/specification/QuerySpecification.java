@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery.specification;
+package com.github.cjgmj.dynamicquery.specification;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,8 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.github.cjgmj.dynamicQuery.modifier.FieldOrder;
-import com.github.cjgmj.dynamicQuery.modifier.ValueFilter;
+import com.github.cjgmj.dynamicquery.modifier.FieldOrder;
+import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
 
 import lombok.AccessLevel;
 import lombok.Getter;

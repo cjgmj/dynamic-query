@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery;
+package com.github.cjgmj.dynamicquery;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

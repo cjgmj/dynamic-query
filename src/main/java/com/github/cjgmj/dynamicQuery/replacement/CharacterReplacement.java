@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery.replacement;
+package com.github.cjgmj.dynamicquery.replacement;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

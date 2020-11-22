@@ -13,3 +13,15 @@ In tests package you have some examples about how to use the classes.
 ### Important note
 
 You must not use `Collection.emptyList()` nor `Arrays.asList()` because it creates an unmodifiable list and Hibernate seems to expect a modifiable list so if you use this mentioned methods it will throws a UnsupportedOperationException.
+
+## Dependency
+
+- Maven
+
+```xml
+    <dependency>
+        <groupId>com.github.cjgmj</groupId>
+        <artifactId>dynamic-query</artifactId>
+        <version>1.0</version>
+    </dependency>
+```

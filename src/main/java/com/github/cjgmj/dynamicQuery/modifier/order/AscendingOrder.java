@@ -1,10 +1,10 @@
-package com.github.cjgmj.dynamicQuery.modifier.order;
+package com.github.cjgmj.dynamicquery.modifier.order;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
-import com.github.cjgmj.dynamicQuery.modifier.FieldOrder;
+import com.github.cjgmj.dynamicquery.modifier.FieldOrder;
 
 public class AscendingOrder extends FieldOrder {
 

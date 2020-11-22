@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery.predicate;
+package com.github.cjgmj.dynamicquery.predicate;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;

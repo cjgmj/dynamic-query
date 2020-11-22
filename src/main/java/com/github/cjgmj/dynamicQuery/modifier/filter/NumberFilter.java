@@ -1,8 +1,8 @@
-package com.github.cjgmj.dynamicQuery.modifier.filter;
+package com.github.cjgmj.dynamicquery.modifier.filter;
 
-import com.github.cjgmj.dynamicQuery.modifier.ValueFilter;
-import com.github.cjgmj.dynamicQuery.predicate.NumberPredicate;
-import com.github.cjgmj.dynamicQuery.predicate.QueryPredicate;
+import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
+import com.github.cjgmj.dynamicquery.predicate.NumberPredicate;
+import com.github.cjgmj.dynamicquery.predicate.QueryPredicate;
 
 public class NumberFilter extends ValueFilter<Number> {
 

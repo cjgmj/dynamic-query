@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery;
+package com.github.cjgmj.dynamicquery;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -11,11 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.github.cjgmj.dynamicQuery.modifier.ValueFilter;
-import com.github.cjgmj.dynamicQuery.modifier.filter.DateLessThanFilter;
-import com.github.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
-import com.github.cjgmj.dynamicQuery.persistence.repository.DummyRepository;
-import com.github.cjgmj.dynamicQuery.specification.QuerySpecification;
+import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
+import com.github.cjgmj.dynamicquery.modifier.filter.DateLessThanFilter;
+import com.github.cjgmj.dynamicquery.persistence.entity.DummyEntity;
+import com.github.cjgmj.dynamicquery.persistence.repository.DummyRepository;
+import com.github.cjgmj.dynamicquery.specification.QuerySpecification;
 
 @SpringBootTest
 public class DateLessThanSpecificationTests {

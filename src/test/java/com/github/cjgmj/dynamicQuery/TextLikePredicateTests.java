@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicQuery;
+package com.github.cjgmj.dynamicquery;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -16,12 +16,12 @@ import javax.persistence.criteria.Root;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.github.cjgmj.dynamicQuery.modifier.ValueFilter;
-import com.github.cjgmj.dynamicQuery.modifier.filter.TextLikeFilter;
-import com.github.cjgmj.dynamicQuery.persistence.entity.DummyEntity;
-import com.github.cjgmj.dynamicQuery.predicate.QueryPredicate;
-import com.github.cjgmj.dynamicQuery.predicate.TextLikePredicate;
-import com.github.cjgmj.dynamicQuery.replacement.CharacterReplacement;
+import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
+import com.github.cjgmj.dynamicquery.modifier.filter.TextLikeFilter;
+import com.github.cjgmj.dynamicquery.persistence.entity.DummyEntity;
+import com.github.cjgmj.dynamicquery.predicate.QueryPredicate;
+import com.github.cjgmj.dynamicquery.predicate.TextLikePredicate;
+import com.github.cjgmj.dynamicquery.replacement.CharacterReplacement;
 
 @SpringBootTest
 class TextLikePredicateTests {
