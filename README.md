@@ -1,6 +1,6 @@
 # Create queries easily
 
-It is a library that allow you to create queries fast giving you a `Specification` which can be easily integrate with `JpaSpecificationExecutor`.
+It is a library that allow you to create fast queries giving you a `Specification` which can be easily integrated with `JpaSpecificationExecutor`.
 
 ## Usage
 
