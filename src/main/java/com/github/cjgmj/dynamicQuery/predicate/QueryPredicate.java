@@ -10,11 +10,11 @@ import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
 @FunctionalInterface
 public interface QueryPredicate {
 
-	Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
-			ValueFilter<?> valueFilter);
-
 	default Predicate getPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, ValueFilter<?> valueFilter) {
 		return this.buildPredicate(criteriaBuilder, root, valueFilter.getExpression(root), valueFilter);
 	}
+
+	Predicate buildPredicate(CriteriaBuilder criteriaBuilder, Root<?> root, Expression<String> expression,
+			ValueFilter<?> valueFilter);
 
 }

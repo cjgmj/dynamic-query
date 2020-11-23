@@ -22,6 +22,7 @@ import com.github.cjgmj.dynamicquery.modifier.filter.TextLikeFilter;
 import com.github.cjgmj.dynamicquery.persistence.entity.DummyEntity;
 import com.github.cjgmj.dynamicquery.predicate.QueryPredicate;
 import com.github.cjgmj.dynamicquery.predicate.TextLikePredicate;
+import com.github.cjgmj.dynamicquery.replacement.BasicCharacterReplacement;
 import com.github.cjgmj.dynamicquery.replacement.CharacterReplacement;
 
 @SpringBootTest
@@ -85,7 +86,7 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkWithoutCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").addListCharactersReplacement(null);
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").defineCharactersReplacement();
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -109,7 +110,7 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john").addListCharactersReplacement(null);
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john").defineCharactersReplacement();
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -133,7 +134,7 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldNotGetResultWithAccentMarkWithoutCharacterReplacementNorNormalizeText() {
-		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").addListCharactersReplacement(null)
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").defineCharactersReplacement()
 				.noNormalizeText();
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
@@ -156,7 +157,7 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacementNorNormalizeText() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john").addListCharactersReplacement(null)
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john").defineCharactersReplacement()
 				.noNormalizeText();
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
@@ -180,7 +181,7 @@ class TextEqualPredicateTests {
 	private String createWhereTextQuery() {
 		String where = "lower(d.name)";
 
-		for (final CharacterReplacement cr : EnumSet.allOf(CharacterReplacement.class)) {
+		for (final CharacterReplacement cr : EnumSet.allOf(BasicCharacterReplacement.class)) {
 			where = "replace(".concat(where).concat(",'").concat(cr.getOldCharacter()).concat("', '")
 					.concat(cr.getNewCharacter()).concat("')");
 		}
