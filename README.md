@@ -24,12 +24,12 @@ You must not use `Collection.emptyList()` nor `Arrays.asList()` because it creat
     <dependency>
         <groupId>com.github.cjgmj</groupId>
         <artifactId>dynamic-query</artifactId>
-        <version>1.0</version>
+        <version>1.0.0</version>
     </dependency>
 ```
 
 - Gradle
 
 ```gradle
-    compile('com.github.cjgmj:dynamic-query:1.0')
+    compile('com.github.cjgmj:dynamic-query:1.0.0')
 ```
