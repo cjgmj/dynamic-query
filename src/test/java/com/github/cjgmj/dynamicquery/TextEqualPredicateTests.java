@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
 import com.github.cjgmj.dynamicquery.modifier.filter.TextEqualFilter;
 import com.github.cjgmj.dynamicquery.modifier.filter.TextLikeFilter;
+import com.github.cjgmj.dynamicquery.modifier.replacement.TextReplacement;
 import com.github.cjgmj.dynamicquery.persistence.entity.DummyEntity;
 import com.github.cjgmj.dynamicquery.predicate.QueryPredicate;
 import com.github.cjgmj.dynamicquery.predicate.TextLikePredicate;
@@ -86,7 +87,8 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkWithoutCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").defineCharactersReplacement();
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn")
+				.defineTextReplacement(TextReplacement.customizeReplacement());
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -110,7 +112,8 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john").defineCharactersReplacement();
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john")
+				.defineTextReplacement(TextReplacement.customizeReplacement());
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -134,8 +137,8 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldNotGetResultWithAccentMarkWithoutCharacterReplacementNorNormalizeText() {
-		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn").defineCharactersReplacement()
-				.noNormalizeText();
+		final ValueFilter<String> valueFilter = new TextEqualFilter("name", "jóhn")
+				.defineTextReplacement(TextReplacement.customizeReplacement()).noNormalizeText();
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -157,8 +160,8 @@ class TextEqualPredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacementNorNormalizeText() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john").defineCharactersReplacement()
-				.noNormalizeText();
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "john")
+				.defineTextReplacement(TextReplacement.customizeReplacement()).noNormalizeText();
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();

@@ -43,7 +43,8 @@ public abstract class TextPredicate implements QueryPredicate {
 
 	private Expression<String> replaceCharacters(Expression<String> expression, CriteriaBuilder criteriaBuilder,
 			ValueFilter<?> valueFilter) {
-		for (final CharacterReplacement rc : ((TextFilter) valueFilter).getCharactersReplacement()) {
+		for (final CharacterReplacement rc : ((TextFilter) valueFilter).getTextReplacement()
+				.getCharactersReplacement()) {
 			expression = criteriaBuilder.function(REPLACE, String.class, expression,
 					criteriaBuilder.literal(rc.getOldCharacter()), criteriaBuilder.literal(rc.getNewCharacter()));
 		}
