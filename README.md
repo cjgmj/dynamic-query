@@ -18,18 +18,20 @@ You must not use `Collection.emptyList()` nor `Arrays.asList()` because it creat
 
 [Repository link](https://mvnrepository.com/artifact/com.github.cjgmj/dynamic-query)
 
+Current version `1.0.1`.
+
 - Maven
 
 ```xml
     <dependency>
         <groupId>com.github.cjgmj</groupId>
         <artifactId>dynamic-query</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </dependency>
 ```
 
 - Gradle
 
 ```gradle
-    compile('com.github.cjgmj:dynamic-query:1.0.0')
+    compile('com.github.cjgmj:dynamic-query:1.0.1')
 ```
