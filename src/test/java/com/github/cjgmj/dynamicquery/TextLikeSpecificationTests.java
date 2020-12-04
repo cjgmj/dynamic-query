@@ -12,7 +12,8 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
 import com.github.cjgmj.dynamicquery.modifier.filter.TextLikeFilter;
-import com.github.cjgmj.dynamicquery.modifier.replacement.TextReplacement;
+import com.github.cjgmj.dynamicquery.modifier.text.configuration.TextFilterConfiguration;
+import com.github.cjgmj.dynamicquery.modifier.text.configuration.TextReplacement;
 import com.github.cjgmj.dynamicquery.persistence.entity.DummyEntity;
 import com.github.cjgmj.dynamicquery.persistence.repository.DummyRepository;
 import com.github.cjgmj.dynamicquery.replacement.BasicCharacterReplacement;
@@ -62,8 +63,8 @@ public class TextLikeSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkWithoutCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(TextReplacement.customizeReplacement());
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").customizeConfiguration(
+				TextFilterConfiguration.normalizeTextWithTextReplacement(TextReplacement.customizeReplacement()));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -80,8 +81,8 @@ public class TextLikeSpecificationTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "oh")
-				.defineTextReplacement(TextReplacement.customizeReplacement());
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "oh").customizeConfiguration(
+				TextFilterConfiguration.normalizeTextWithTextReplacement(TextReplacement.customizeReplacement()));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -98,8 +99,8 @@ public class TextLikeSpecificationTests {
 
 	@Test
 	void shouldNotGetResultWithAccentMarkWithoutCharacterReplacementNorNormalizeText() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(TextReplacement.customizeReplacement()).noNormalizeText();
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").customizeConfiguration(
+				TextFilterConfiguration.noNormalizeTextWithTextReplacement(TextReplacement.customizeReplacement()));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -115,8 +116,8 @@ public class TextLikeSpecificationTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacementNorNormalizeText() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "oh")
-				.defineTextReplacement(TextReplacement.customizeReplacement()).noNormalizeText();
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "oh").customizeConfiguration(
+				TextFilterConfiguration.noNormalizeTextWithTextReplacement(TextReplacement.customizeReplacement()));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -134,8 +135,8 @@ public class TextLikeSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkAndStandardCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(TextReplacement.standardReplacements());
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").customizeConfiguration(
+				TextFilterConfiguration.normalizeTextWithTextReplacement(TextReplacement.standardReplacements()));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -158,7 +159,8 @@ public class TextLikeSpecificationTests {
 		charactersReplacement.add(BasicCharacterReplacement.O_ACUTE);
 
 		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(TextReplacement.customizeReplacement(charactersReplacement));
+				.customizeConfiguration(TextFilterConfiguration
+						.normalizeTextWithTextReplacement(TextReplacement.customizeReplacement(charactersReplacement)));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -175,8 +177,8 @@ public class TextLikeSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkIntroducingCharacterReplacementNull() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(TextReplacement.customizeReplacement());
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").customizeConfiguration(
+				TextFilterConfiguration.normalizeTextWithTextReplacement(TextReplacement.customizeReplacement()));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -194,7 +196,8 @@ public class TextLikeSpecificationTests {
 	@Test
 	void shouldGetResultWithAccentMarkIntroducingCharacterReplacement() {
 		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(TextReplacement.customizeReplacement(BasicCharacterReplacement.O_ACUTE));
+				.customizeConfiguration(TextFilterConfiguration.normalizeTextWithTextReplacement(
+						TextReplacement.customizeReplacement(BasicCharacterReplacement.O_ACUTE)));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -216,8 +219,9 @@ public class TextLikeSpecificationTests {
 
 		charactersReplacement.add(BasicCharacterReplacement.O_ACUTE);
 
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").defineTextReplacement(
-				TextReplacement.emptyReplacements().addCharactersReplacement(charactersReplacement));
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
+				.customizeConfiguration(TextFilterConfiguration.normalizeTextWithTextReplacement(
+						TextReplacement.emptyReplacements().addCharactersReplacement(charactersReplacement)));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -235,9 +239,10 @@ public class TextLikeSpecificationTests {
 	@Test
 	void shouldGetResultWithAccentMarkAddingCharactersReplacement() {
 
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").defineTextReplacement(
-				TextReplacement.emptyReplacements().addCharactersReplacement(BasicCharacterReplacement.O_ACUTE,
-						BasicCharacterReplacement.A_ACUTE));
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
+				.customizeConfiguration(TextFilterConfiguration.normalizeTextWithTextReplacement(
+						TextReplacement.emptyReplacements().addCharactersReplacement(BasicCharacterReplacement.O_ACUTE,
+								BasicCharacterReplacement.A_ACUTE)));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -255,7 +260,8 @@ public class TextLikeSpecificationTests {
 	@Test
 	void shouldGetResultWithAccentMarkAddingCharacterReplacementNull() {
 		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(TextReplacement.standardReplacements().addCharactersReplacement());
+				.customizeConfiguration(TextFilterConfiguration.normalizeTextWithTextReplacement(
+						TextReplacement.standardReplacements().addCharactersReplacement()));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -272,8 +278,9 @@ public class TextLikeSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkAddingCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").defineTextReplacement(
-				TextReplacement.customizeReplacement(new CustomizeCharacterReplacement("*", " ")));
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
+				.customizeConfiguration(TextFilterConfiguration.normalizeTextWithTextReplacement(
+						TextReplacement.customizeReplacement(new CustomizeCharacterReplacement("*", " "))));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -291,7 +298,8 @@ public class TextLikeSpecificationTests {
 	@Test
 	void shouldGetResultWithAccentMarkRemovingCharacterReplacementNull() {
 		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(TextReplacement.standardReplacements().removeReplacement(null));
+				.customizeConfiguration(TextFilterConfiguration.normalizeTextWithTextReplacement(
+						TextReplacement.standardReplacements().removeReplacement(null)));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -308,8 +316,9 @@ public class TextLikeSpecificationTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkRemovingCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").defineTextReplacement(
-				TextReplacement.standardReplacements().removeReplacement(BasicCharacterReplacement.O_ACUTE));
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
+				.customizeConfiguration(TextFilterConfiguration.normalizeTextWithTextReplacement(
+						TextReplacement.standardReplacements().removeReplacement(BasicCharacterReplacement.O_ACUTE)));
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 
@@ -327,9 +336,40 @@ public class TextLikeSpecificationTests {
 	@Test
 	void shouldGetResultWithAccentMarkRemovingCharacterReplacementNoNormalizeText() {
 		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(
-						TextReplacement.standardReplacements().removeReplacement(BasicCharacterReplacement.O_ACUTE))
-				.noNormalizeText();
+				.customizeConfiguration(TextFilterConfiguration.noNormalizeTextWithTextReplacement(
+						TextReplacement.standardReplacements().removeReplacement(BasicCharacterReplacement.O_ACUTE)));
+
+		final List<ValueFilter<?>> filters = new ArrayList<>();
+
+		filters.add(valueFilter);
+
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).getSpecification();
+
+		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
+
+		assertEquals(0, dummies.size());
+	}
+
+	@Test
+	void shouldGetResultWithAccentMarkAndEmptyCharacterReplacement() {
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").noNormalizeAndStandardReplacement();
+
+		final List<ValueFilter<?>> filters = new ArrayList<>();
+
+		filters.add(valueFilter);
+
+		final Specification<DummyEntity> specification = QuerySpecification.<DummyEntity>getQuerySpecification()
+				.restrictiveFilters(filters).getSpecification();
+
+		final List<DummyEntity> dummies = this.dummyRepository.findAll(specification);
+
+		assertEquals(0, dummies.size());
+	}
+
+	@Test
+	void shouldGetResultWithAccentMarkAndEmptyCharacterReplacementNoNormalizeText() {
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").noNormalizeAndEmptyReplacement();
 
 		final List<ValueFilter<?>> filters = new ArrayList<>();
 

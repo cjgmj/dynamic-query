@@ -1,4 +1,4 @@
-package com.github.cjgmj.dynamicquery.modifier.replacement;
+package com.github.cjgmj.dynamicquery.modifier.text.configuration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,18 @@ import com.github.cjgmj.dynamicquery.replacement.CharacterReplacement;
 
 import lombok.Getter;
 
+/**
+ * In this class can be defined the characters replacement for the text filter.
+ * This class provide two methods, {@code emptyReplacements} and
+ * {@code standardReplacements}, for set up fast characters replacement.
+ * <p>
+ * 
+ * It also could be defined a customized characters replacement using the
+ * {@code customizeReplacement} method.
+ * 
+ * @author cjgmj
+ *
+ */
 @Getter
 public class TextReplacement {
 

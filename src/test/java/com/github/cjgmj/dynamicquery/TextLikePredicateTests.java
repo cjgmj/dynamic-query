@@ -18,7 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.github.cjgmj.dynamicquery.modifier.ValueFilter;
 import com.github.cjgmj.dynamicquery.modifier.filter.TextLikeFilter;
-import com.github.cjgmj.dynamicquery.modifier.replacement.TextReplacement;
+import com.github.cjgmj.dynamicquery.modifier.text.configuration.TextFilterConfiguration;
+import com.github.cjgmj.dynamicquery.modifier.text.configuration.TextReplacement;
 import com.github.cjgmj.dynamicquery.persistence.entity.DummyEntity;
 import com.github.cjgmj.dynamicquery.predicate.QueryPredicate;
 import com.github.cjgmj.dynamicquery.predicate.TextLikePredicate;
@@ -85,8 +86,8 @@ class TextLikePredicateTests {
 
 	@Test
 	void shouldGetResultWithAccentMarkWithoutCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(TextReplacement.customizeReplacement());
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").customizeConfiguration(
+				TextFilterConfiguration.normalizeTextWithTextReplacement(TextReplacement.customizeReplacement()));
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -110,8 +111,8 @@ class TextLikePredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacement() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "oh")
-				.defineTextReplacement(TextReplacement.customizeReplacement());
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "oh").customizeConfiguration(
+				TextFilterConfiguration.normalizeTextWithTextReplacement(TextReplacement.customizeReplacement()));
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -135,8 +136,8 @@ class TextLikePredicateTests {
 
 	@Test
 	void shouldNotGetResultWithAccentMarkWithoutCharacterReplacementNorNormalizeText() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh")
-				.defineTextReplacement(TextReplacement.customizeReplacement()).noNormalizeText();
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "óh").customizeConfiguration(
+				TextFilterConfiguration.noNormalizeTextWithTextReplacement(TextReplacement.customizeReplacement()));
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
@@ -158,8 +159,8 @@ class TextLikePredicateTests {
 
 	@Test
 	void shouldGetResultWithoutAccentMarkNorCharacterReplacementNorNormalizeText() {
-		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "oh").noNormalizeText()
-				.defineTextReplacement(TextReplacement.customizeReplacement());
+		final ValueFilter<String> valueFilter = new TextLikeFilter("name", "oh").customizeConfiguration(
+				TextFilterConfiguration.noNormalizeTextWithTextReplacement(TextReplacement.customizeReplacement()));
 		final QueryPredicate queryPredicate = new TextLikePredicate();
 
 		final CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();

@@ -18,6 +18,28 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * It is necessary to call {@code getQuerySpecification} method to get a {@code
+ * QuerySpecification} instance.
+ * <p>
+ * 
+ * The {@code QuerySpecification} is an interface that provides methods to add
+ * AND conditions using {@code restrictiveFilters} method or add OR conditions
+ * using {@code nonRestrictiveFilters} method. It is possible use both at the
+ * same time to get the proper where clause.
+ * <p>
+ * 
+ * Also, this interface provide the {@code orderBy} method to indicate the query
+ * order.
+ * <p>
+ * 
+ * Once the filters and order is defined, the predicate could be obtained using
+ * the {@code getPredicate} method.
+ * 
+ * @author cjgmj
+ *
+ * @param <T> the type of the entity
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class QuerySpecification<T> {
